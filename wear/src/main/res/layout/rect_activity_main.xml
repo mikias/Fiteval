@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="fiteval.com.fiteval.MainActivity"
+    tools:context="fiteval.com.fiteval.ui.activity.MainActivity"
     tools:deviceIds="wear_square">
 
     <TextView

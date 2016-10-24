@@ -1,0 +1,40 @@
+package com.fiteval.ui.activity;
+
+import android.content.Intent;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import com.fiteval.R;
+import com.fiteval.config.FitevalApplication;
+
+public class IntroActivity extends AppCompatActivity {
+
+    private FitevalApplication mApplication;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_intro);
+
+        mApplication = (FitevalApplication) getApplicationContext();
+        int loadingTime = 2500;
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startMainActivity();
+            }
+        }, loadingTime);
+    }
+
+    /**
+     * Starts MainActivity
+     */
+    private void startMainActivity() {
+        Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+        finish();
+    }
+}

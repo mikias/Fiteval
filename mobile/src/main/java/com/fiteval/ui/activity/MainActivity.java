@@ -1,7 +1,9 @@
-package fiteval.com.fiteval;
+package com.fiteval.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.fiteval.R;
 
 public class MainActivity extends AppCompatActivity {
 
