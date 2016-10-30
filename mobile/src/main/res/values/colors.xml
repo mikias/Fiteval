@@ -5,4 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <!--slide menu-->
+    <color name="fragment_navigation_drawer_txt_pressed">#2d353e</color>
+    <color name="fragment_navigation_drawer_background_default">#2d353e</color>
+    <color name="fragment_navigation_drawer_background_pressed">#eeeeee</color>
+    <color name="slide_menu_line">#80eeeeee</color>
 </resources>

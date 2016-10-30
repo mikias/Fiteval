@@ -26,5 +26,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services:9.8.00'
     //compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.balysv.materialmenu:material-menu:1.5.4'
 }
 apply plugin: 'com.google.gms.google-services'
