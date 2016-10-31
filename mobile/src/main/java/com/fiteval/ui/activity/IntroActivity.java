@@ -32,7 +32,14 @@ public class IntroActivity extends AppCompatActivity {
      * Starts MainActivity
      */
     private void startMainActivity() {
-        Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+        boolean isUserAuthenticated = false;
+        Intent intent;
+        if (isUserAuthenticated) {
+            intent = new Intent(IntroActivity.this, MainActivity.class);
+        }
+        else {
+            intent = new Intent(IntroActivity.this, LoginActivity.class);
+        }
         startActivity(intent);
         overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
         finish();
