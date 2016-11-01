@@ -18,4 +18,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="enter_your_email_hint">Enter your email</string>
+    <string name="enter_your_password_hint">Enter your password</string>
+    <string name="btn_reset_password">Reset</string>
+    <string name="btn_back">Back</string>
 </resources>

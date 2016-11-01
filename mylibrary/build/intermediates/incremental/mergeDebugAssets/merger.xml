@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/mikias/Desktop/Fiteval/mylibrary/src/main/assets"/><source path="/Users/mikias/Desktop/Fiteval/mylibrary/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/mikias/Desktop/Fiteval/mylibrary/src/debug/assets"/></dataSet></merger>
