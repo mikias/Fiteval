@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "850633976775",
-    "firebase_url": "https://fiteval-38c54.firebaseio.com",
-    "project_id": "fiteval-38c54",
-    "storage_bucket": "fiteval-38c54.appspot.com"
+    "project_number": "329170540975",
+    "firebase_url": "https://fiteval-69755.firebaseio.com",
+    "project_id": "fiteval-69755",
+    "storage_bucket": "fiteval-69755.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:850633976775:android:d20d0e54c1ad8fbb",
+        "mobilesdk_app_id": "1:329170540975:android:d20d0e54c1ad8fbb",
         "android_client_info": {
           "package_name": "com.fiteval"
         }
       },
       "oauth_client": [
         {
-          "client_id": "850633976775-5q91e01l0sg7rotrc1vlus1dtb5joeqb.apps.googleusercontent.com",
+          "client_id": "329170540975-5c31elbdpgie4dhe6qbqcljmb6am0sci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fiteval",
+            "certificate_hash": "105CCBECB95C7400A625E3C5C0337418E7BBAE6D"
+          }
+        },
+        {
+          "client_id": "329170540975-kvt24h1r27j5ucbhr2lt3gpmkcc8l1l4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAlHB98un7zJhF6ie0WKMQaWzGCKcu3b2I"
+          "current_key": "AIzaSyBTNXuaMjm9fXTJi7enfEAtdJotwCtfw6s"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329170540975-kvt24h1r27j5ucbhr2lt3gpmkcc8l1l4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
