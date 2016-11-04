@@ -35,7 +35,7 @@
         android:layout_height="1dp"
         android:background="@color/slide_menu_line" />
 
-    <!-- Raid -->
+    <!-- RaidFragment -->
     <LinearLayout
         android:id="@+id/fragment_navigation_drawer_btn_raid"
         android:layout_width="match_parent"
