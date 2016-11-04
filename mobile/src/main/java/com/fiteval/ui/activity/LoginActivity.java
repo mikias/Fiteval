@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"Successfully signed in", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent (LoginActivity.this, MainActivity.class));
                 }else{
                     Toast.makeText(LoginActivity.this,"There was an error....", Toast.LENGTH_LONG).show();
                 }

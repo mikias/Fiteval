@@ -1,5 +1,7 @@
 package com.fiteval.model;
 
+import java.util.ArrayList;
+
 import static com.fiteval.model.InvSlots.ARMOR;
 import static com.fiteval.model.InvSlots.BOOTS;
 import static com.fiteval.model.InvSlots.HELMET;
@@ -9,7 +11,6 @@ import static com.fiteval.model.InvSlots.WEAPON;
  * Created by nader on 11/3/16.
  */
 
-//TODO create tostrings for all
 public class Knight implements Inventory.InventoryListener {
     private int mGold;
     private long mExp;
@@ -23,10 +24,15 @@ public class Knight implements Inventory.InventoryListener {
 
     private boolean mInit;
 
-    public Knight(int gold, long exp, Inventory inv){
-        mGold = gold;
-        mExp = exp;
-        mInv = inv;
+    private String email;
+    private String dob;
+    private Genders gender;
+    private String nickname;
+
+    public Knight() {
+        mInv = new Inventory(new ArrayList<Equipment>());
+        mGold = 0;
+        mExp = 0;
 
         mInv.setmListener(this);
 
@@ -34,6 +40,16 @@ public class Knight implements Inventory.InventoryListener {
         mArmor = new Equipment();
         mWeapon = new Equipment();
         mBoots = new Equipment();
+
+        mInit = true;
+    }
+
+    public Knight(int gold, long exp, Inventory inv){
+        mGold = gold;
+        mExp = exp;
+        mInv = inv;
+
+        mInv.setmListener(this);
 
         mInit = true;
     }
@@ -109,6 +125,38 @@ public class Knight implements Inventory.InventoryListener {
 
     public void setmBoots(Equipment mBoots) {
         this.mBoots = mBoots;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public Genders getGender() {
+        return gender;
+    }
+
+    public void setGender(Genders gender) {
+        this.gender = gender;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     //TODO add events that update exp and gold

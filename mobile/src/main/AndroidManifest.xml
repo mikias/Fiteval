@@ -15,19 +15,29 @@
         android:supportsRtl="true"
         android:theme="@style/BaseTheme">
         //activity - define the class name
-        <activity android:name=".ui.activity.MainActivity">
+        <activity
+            android:name="com.fiteval.ui.activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
 
+        <activity android:name=".ui.activity.LoginActivity"
+                  android:label="Login Activity">
+        </activity>
+
+        <activity android:name=".ui.activity.MainActivity"
+                  android:label="Main Activity">
+
+        </activity>
+
         <activity
             android:name="com.fiteval.ui.activity.SignUpActivity"
             android:label="@string/title_activity_login" />
         <activity android:name="com.fiteval.ui.activity.ForgotPasswordActivity">
+
 
 
         </activity>
