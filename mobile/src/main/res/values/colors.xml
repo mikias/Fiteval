@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#186FBB</color>
+    <color name="colorPrimary">#858585</color>
     <color name="colorPrimaryDark">#155B9B</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
@@ -12,4 +12,10 @@
     <color name="fragment_navigation_drawer_background_default">#2d353e</color>
     <color name="fragment_navigation_drawer_background_pressed">#eeeeee</color>
     <color name="slide_menu_line">#80eeeeee</color>
+
+    <color name="grey_85">#858585</color>
+    <color name="grey_66">#666666</color>
+
+    <color name="alert_red">#BA1818</color>
+    <color name="alert_red_dark">#991715</color>
 </resources>

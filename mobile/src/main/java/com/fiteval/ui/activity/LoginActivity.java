@@ -3,91 +3,112 @@ package com.fiteval.ui.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import com.fiteval.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.fiteval.ui.dialog.SimpleAlertDialog;
+import com.fiteval.util.MiscUtil;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * Created by Mikias Alemu on 11/01/2016.
+ *
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
 
-    //UI controls
-    private Button mSignin, mSignup, mForgotPassword;
-    private EditText mEmail, mPassword;
+    private Button mSignIn;
+    private Button mSignUp;
+    private Button mForgotPassword;
+    private EditText mEtEmail;
+    private EditText mEtPassword;
+    private ImageButton mBtnEmailClear;
+    private ImageButton mBtnPasswordClear;
     private ProgressDialog mProgress;
 
-    //Firebase Auth class
     private FirebaseAuth mAuth;
+    private MiscUtil mUtils;
+    private SimpleAlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //UI components
-        mSignin = (Button) findViewById(R.id.signin);
-        mSignup = (Button) findViewById(R.id.signup);
-        mForgotPassword = (Button) findViewById(R.id.forgot);
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-
+        mUtils = new MiscUtil(this);
+        mDialog = new SimpleAlertDialog(this);
         mAuth = FirebaseAuth.getInstance();
+        initView();
+    }
+
+    private void initView() {
+        mSignIn = (Button) findViewById(R.id.signin);
+        mSignUp = (Button) findViewById(R.id.signup);
+        mForgotPassword = (Button) findViewById(R.id.forgot);
+        mEtEmail = (EditText) findViewById(R.id.login_et_userId);
+        mEtPassword = (EditText) findViewById(R.id.login_et_userPass);
+        mBtnEmailClear = (ImageButton) findViewById(R.id.login_btn_idClear);
+        mBtnPasswordClear = (ImageButton) findViewById(R.id.login_btn_pwClear);
+
+
         mProgress = new ProgressDialog(this);
 
-        mSignin.setOnClickListener(new View.OnClickListener() {
+        mBtnEmailClear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Signin();
+            public void onClick(View v) {
+                mEtEmail.setText("");
+            }
+        });
+        mBtnPasswordClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEtPassword.setText("");
             }
         });
 
-        mSignup.setOnClickListener(new View.OnClickListener() {
+
+        mSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                signIn();
+            }
+        });
 
-                Intent signup = new Intent(LoginActivity.this,SignUpActivity.class);
-                startActivity(signup);
-
+        mSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
             }
         });
 
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent forgot = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
-                startActivity(forgot);
-
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
         });
-
-
     }
 
-    private void Signin() {
-
+    /**
+     *
+     */
+    private void signIn() {
         //Getting Email and password from users
-        String email = mEmail.getText().toString().trim();
-        String password = mPassword.getText().toString().trim();
+        String email = mEtEmail.getText().toString().trim();
+        String password = mEtPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)){
-            Toast.makeText(LoginActivity.this,"Please enter email", Toast.LENGTH_LONG).show();
+            mDialog.show("Please enter email address");
+            mUtils.showKeyboardFrom(this, mEtEmail);
             return;
         }
 
         if (TextUtils.isEmpty(password)){
-            Toast.makeText(LoginActivity.this,"Please enter Password", Toast.LENGTH_LONG).show();
+            mDialog.show("Please enter password");
+            mUtils.showKeyboardFrom(this, mEtPassword);
             return;
         }
 
@@ -95,19 +116,32 @@ public class LoginActivity extends AppCompatActivity {
         mProgress.setMessage("Signing in please wait.....");
         mProgress.show();
 
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mProgress.cancel();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                //overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+                finish();
+            }
+        }, 1000);
+
+
+        // not working
+        /*
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this,
+                new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
+                mProgress.cancel();
                 if (task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this,"Successfully signed in", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent (LoginActivity.this, MainActivity.class));
+                    mUtils.toastCheckMark();
                 }else{
-                    Toast.makeText(LoginActivity.this,"There was an error....", Toast.LENGTH_LONG).show();
+                    mUtils.toastXMark();
+                    mUtils.toastLong("There was an error...");
                 }
-
             }
         });
-
+        */
     }
 }

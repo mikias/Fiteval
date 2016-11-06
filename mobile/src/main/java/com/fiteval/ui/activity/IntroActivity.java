@@ -1,42 +1,43 @@
 package com.fiteval.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import com.fiteval.R;
+import com.fiteval.config.FitevalApplication;
 
-/**
- * Created by TravisNguyen on 11/3/16.
- */
+public class IntroActivity extends AppCompatActivity {
 
-//splash load screen to intro Fiteval
-
-public class IntroActivity extends Activity
-{
-    //adjust splash time
-    private final int SPLASH_DISPLAY_LENTH = 2000;
-
-    public void onCreate(Bundle savedInstanceState)
-    {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        int loadingTime = 2000;
 
-        new Handler().postDelayed(new Runnable()
-        {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
-                Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
-                IntroActivity.this.startActivity(intent);
-                IntroActivity.this.finish();
+            public void run() {
+                startMainActivity();
             }
-        }, SPLASH_DISPLAY_LENTH);
-
+        }, loadingTime);
     }
 
-
-
+    /**
+     * Starts MainActivity
+     */
+    private void startMainActivity() {
+        boolean isUserAuthenticated = false;
+        Intent intent;
+        if (isUserAuthenticated) {
+            intent = new Intent(IntroActivity.this, MainActivity.class);
+        }
+        else {
+            intent = new Intent(IntroActivity.this, LoginActivity.class);
+        }
+        startActivity(intent);
+        overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+        finish();
+    }
 }
-
