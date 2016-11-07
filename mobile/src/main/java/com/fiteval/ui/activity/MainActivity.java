@@ -2,6 +2,8 @@ package com.fiteval.ui.activity;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -13,10 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.fiteval.R;
+import com.fiteval.controller.HeartReader;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.ui.fragment.MainFragment;
 import com.fiteval.ui.fragment.NavigationFragment;
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager mFragManager;
     private Fragment mFragment;
 
+    private TextView heartBeatTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFragment = new MainFragment();
         mToolbar.setTitle("Avatar");
         switchFragment(MainFragment.TAG);
+
+        heartBeatTextView = (TextView) findViewById(R.id.heartbeatTextView);
+    }
+
+    //handles heart reading
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // message from API client! message from wear! The contents is the heartbeat.
+            if(heartBeatTextView!=null)
+                heartBeatTextView.setText(Integer.toString(msg.what));
+        }
+    };
+
+    //handles heart reading
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register our handler with the HeartReader. This ensures we get messages whenever the service receives something.
+        HeartReader.setHandler(handler);
+    }
+
+    //handles heart reading
+    @Override
+    protected void onPause() {
+        // unregister our handler so the service does not need to send its messages anywhere.
+        HeartReader.setHandler(null);
+        super.onPause();
     }
 
     @Override

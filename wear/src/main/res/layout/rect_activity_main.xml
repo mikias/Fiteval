@@ -4,12 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="fiteval.com.fiteval.ui.activity.MainActivity"
+    tools:context="fiteval.com.fiteval.MainActivity"
     tools:deviceIds="wear_square">
 
     <TextView
-        android:id="@+id/text"
+        android:text="11"
         android:layout_width="wrap_content"
+        android:id="@+id/heartbeat"
         android:layout_height="wrap_content"
-        android:text="@string/hello_square" />
+        android:textColor="#77ff99"
+        android:textSize="128sp"
+        android:layout_gravity="center"/>
 </LinearLayout>
