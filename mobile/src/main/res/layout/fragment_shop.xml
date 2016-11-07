@@ -1,13 +1,213 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fiteval.ui.fragment.ShopFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:id="@+id/layout_avatar"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_white_rounded_corner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="100dp"
+            android:layout_height="125dp"
+            android:layout_margin="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Helmet"
+        android:layout_above="@+id/layout_helmet"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_helmet" />
+
+    <LinearLayout
+        android:id="@+id/layout_helmet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_white_rounded_corner"
+        android:layout_below="@+id/layout_avatar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/iv_wizard"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_steel"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_dragon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Armor"
+        android:layout_below="@id/layout_helmet"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_armor" />
+
+    <LinearLayout
+        android:id="@+id/layout_armor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_white_rounded_corner"
+        android:layout_below="@+id/tv_armor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/iv_chainbody"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_steelplate"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_dragonplate"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shoes"
+        android:layout_below="@id/layout_armor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_shoes" />
+
+    <LinearLayout
+        android:id="@+id/layout_shoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_white_rounded_corner"
+        android:layout_below="@+id/tv_shoes"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/iv_leather"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_chain"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_spiked"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weapon"
+        android:layout_below="@id/layout_shoes"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tv_weapon" />
+
+    <LinearLayout
+        android:id="@+id/layout_weapon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_white_rounded_corner"
+        android:layout_below="@+id/tv_weapon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/iv_oak"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_sword"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+        <ImageView
+            android:id="@+id/iv_great"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/knight" />
+    </LinearLayout>
+
+</RelativeLayout>
