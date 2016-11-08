@@ -28,13 +28,13 @@
         android:layout_alignParentEnd="true">
 
         <ImageView
-            android:id="@+id/iv_wizard"
+            android:id="@+id/iv_wizard_hat"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/knight"
+            android:src="@drawable/wizard_hat"
             tools:ignore="ContentDescription,RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_steel_helm"
@@ -46,13 +46,13 @@
             android:src="@drawable/steel_helm"
             tools:ignore="RtlHardcoded"/>
         <ImageView
-            android:id="@+id/iv_dragon"
+            android:id="@+id/iv_viking_helmet"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/knight"
+            android:src="@drawable/viking_helmet"
             tools:ignore="RtlHardcoded"/>
     </LinearLayout>
 
@@ -81,13 +81,13 @@
         android:layout_alignParentEnd="true">
 
         <ImageView
-            android:id="@+id/iv_chainbody"
+            android:id="@+id/iv_wizard_cloak"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/knight"
+            android:src="@drawable/wizard_cloak"
             tools:ignore="RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_steelplate"
@@ -99,13 +99,13 @@
             android:src="@drawable/steelplate_body"
             tools:ignore="RtlHardcoded"/>
         <ImageView
-            android:id="@+id/iv_dragonplate"
+            android:id="@+id/iv_viking_armor"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/knight"
+            android:src="@drawable/viking_armor"
             tools:ignore="RtlHardcoded"/>
     </LinearLayout>
 
@@ -159,13 +159,13 @@
         android:layout_alignParentEnd="true">
 
         <ImageView
-            android:id="@+id/iv_oak"
+            android:id="@+id/iv_oakstaff"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/knight"
+            android:src="@drawable/oakstaff"
             tools:ignore="RtlHardcoded"/>
 
         <ImageView
@@ -174,16 +174,16 @@
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/greatsword_shop"
+            android:src="@drawable/sword"
             tools:ignore="RtlHardcoded"/>
         <ImageView
-            android:id="@+id/iv_great"
+            android:id="@+id/iv_battle_axe"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/knight"
+            android:src="@drawable/battle_axe"
             tools:ignore="RtlHardcoded"/>
     </LinearLayout>
 
@@ -207,10 +207,19 @@
             tools:ignore="RtlHardcoded"/>
 
         <ImageView
+            android:id="@+id/hand_helmet"
+            android:layout_width="100dp"
+            android:layout_height="125dp"
+            android:src="@drawable/wizard_hat"
+            android:layout_alignTop="@+id/iv_avatar"
+            android:layout_alignLeft="@+id/iv_avatar"
+            android:layout_alignStart="@+id/iv_avatar"/>
+
+        <ImageView
             android:id="@+id/hand_armor"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/steel_helm"
+            android:src="@drawable/wizard_cloak"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
@@ -219,16 +228,16 @@
             android:id="@+id/hand_weapon"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/steelplate_body"
+            android:src="@drawable/oakstaff"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
 
         <ImageView
-            android:id="@+id/hand_helmet"
+            android:id="@+id/hand_on"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/greatsword_hand"
+            android:src="@drawable/hand"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
