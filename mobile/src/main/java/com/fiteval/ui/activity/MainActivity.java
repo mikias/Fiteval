@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.fiteval.R;
 import com.fiteval.controller.HeartReader;
+import com.fiteval.model.Knight;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.ui.fragment.MainFragment;
 import com.fiteval.ui.fragment.NavigationFragment;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView heartBeatTextView;
 
+    // -------------------------------------------------------
+    private Knight knight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFragment = new MainFragment();
         mToolbar.setTitle("Avatar");
         switchFragment(MainFragment.TAG);
+
+
+        //TODO: check if a knight save exists or if the user exists and pull the info
+        knight = new Knight();
+        loadItems();
 
         heartBeatTextView = (TextView) findViewById(R.id.heartbeatTextView);
     }
@@ -240,5 +249,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(mContainerFragment, mFragment, tag)
                 .addToBackStack(tag)
                 .commit();
+    }
+
+    private void loadItems() {
+        knight.getmInv().
     }
 }

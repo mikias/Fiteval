@@ -18,4 +18,6 @@
 
     <color name="alert_red">#BA1818</color>
     <color name="alert_red_dark">#991715</color>
+
+    <color name="transparent">#ff000000</color>
 </resources>
