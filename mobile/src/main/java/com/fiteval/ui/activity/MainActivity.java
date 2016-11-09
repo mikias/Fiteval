@@ -21,6 +21,7 @@ import com.fiteval.R;
 import com.fiteval.controller.HeartReader;
 import com.fiteval.model.Equipment;
 import com.fiteval.model.InvSlots;
+import com.fiteval.model.Inventory;
 import com.fiteval.model.Knight;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.ui.fragment.LeaderboardFragment;
@@ -75,26 +76,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //TODO: check if a knight save exists or if the user exists and pull the info
         knight = new Knight();
         loadItems();
-
-        heartBeatTextView = (TextView) findViewById(R.id.heartbeatTextView);
     }
 
-    //handles heart reading
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            // message from API client! message from wear! The contents is the heartbeat.
-            if(heartBeatTextView!=null)
-                heartBeatTextView.setText(Integer.toString(msg.what));
-        }
-    };
 
     //handles heart reading
     @Override
     protected void onResume() {
         super.onResume();
         // register our handler with the HeartReader. This ensures we get messages whenever the service receives something.
-        HeartReader.setHandler(handler);
+        //HeartReader.setHandler(handler);
     }
 
     //handles heart reading

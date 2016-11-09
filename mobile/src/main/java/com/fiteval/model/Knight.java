@@ -1,7 +1,8 @@
 package com.fiteval.model;
 
+import java.util.ArrayList;
+
 import static com.fiteval.model.InvSlots.ARMOR;
-import static com.fiteval.model.InvSlots.BOOTS;
 import static com.fiteval.model.InvSlots.HELMET;
 import static com.fiteval.model.InvSlots.WEAPON;
 
@@ -22,6 +23,10 @@ public class Knight implements Inventory.InventoryListener {
     private Equipment mBoots;
 
     private boolean mInit;
+
+    public Knight() {
+        new Knight(2000, 10000, new Inventory(new ArrayList<Equipment>()));
+    }
 
     public Knight(int gold, long exp, Inventory inv){
         mGold = gold;
@@ -72,9 +77,6 @@ public class Knight implements Inventory.InventoryListener {
                 break;
             case WEAPON:
                 mWeapon = item;
-                break;
-            case BOOTS:
-                mBoots = item;
                 break;
         }
     }
