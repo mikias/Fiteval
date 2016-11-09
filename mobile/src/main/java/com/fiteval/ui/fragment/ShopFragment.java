@@ -38,9 +38,6 @@ public class ShopFragment extends Fragment {
     private ImageView mIVSword;
     private ImageView mIVBattleAxe;
 
-    private OnFragmentInteractionListener mListener;
-    public static final String TAG = MainFragment.class.getName();
-
     public ShopFragment() {
         // Required empty public constructor
     }
@@ -48,8 +45,6 @@ public class ShopFragment extends Fragment {
     public static ShopFragment newInstance() {
         ShopFragment fragment = new ShopFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
