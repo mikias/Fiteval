@@ -21,11 +21,13 @@ public class Inventory {
         mListener = listener;
     }
 
-    public void addItem(Equipment item) {
+    public Inventory addItem(Equipment item) {
         mEquipmentList.add(item);
         if(item.isEquipped() && mListener != null) {
             mListener.equipItem(item);
         }
+
+        return this;
     }
 
     public interface InventoryListener {

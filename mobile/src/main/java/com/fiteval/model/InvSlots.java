@@ -5,5 +5,5 @@ package com.fiteval.model;
  */
 
 public enum InvSlots {
-    HELMET, ARMOR, WEAPON, BOOTS
+    HELMET, ARMOR, WEAPON
 }

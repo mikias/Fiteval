@@ -21,10 +21,13 @@ import android.widget.Toast;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.fiteval.R;
 import com.fiteval.controller.HeartReader;
+import com.fiteval.model.Equipment;
+import com.fiteval.model.InvSlots;
 import com.fiteval.model.Knight;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.ui.fragment.MainFragment;
 import com.fiteval.ui.fragment.NavigationFragment;
+import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView heartBeatTextView;
 
     // -------------------------------------------------------
-    private Knight knight;
+    public Knight knight;
 
 
     @Override
@@ -240,6 +243,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fragment_navigation_drawer_btn_shop:
                 mUtil.toastCenter("SHOP Clicked");
                 mToolbar.setTitle("Shop");
+                mFragment = new ShopFragment();
+                switchFragment(ShopFragment.TAG);
                 break;
         }
     }
@@ -252,6 +257,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadItems() {
-        knight.getmInv().
+        Equipment wizHat, steelHelm, vikingHelm;
+        Equipment wizCloak, steelPlate, vikingArmor;
+        Equipment staff, sword, axe;
+
+        //Equipment statements require these params:
+        //boolean equipped, boolean purchased, String name, int cost, InvSlots slot
+        wizHat = new Equipment(false, false, "Wizard Hat", 100, InvSlots.HELMET);
+        steelHelm = new Equipment(false, false, "Steel Helmet", 300, InvSlots.HELMET);
+        vikingHelm = new Equipment(false, false, "Viking Helmet", 1000, InvSlots.HELMET);
+
+        wizCloak = new Equipment(false, false, "Wizard Cloak", 200, InvSlots.ARMOR);
+        steelPlate = new Equipment(false, false, "Steel Platebody", 650, InvSlots.ARMOR);
+        vikingArmor = new Equipment(false, false, "Viking Armor", 1500, InvSlots.ARMOR);
+
+        staff = new Equipment(false, false, "Oak Staff", 50, InvSlots.WEAPON);
+        sword = new Equipment(false, false, "Iron Sword", 400, InvSlots.WEAPON);
+        axe = new Equipment(false, false, "Battle Axe", 1000, InvSlots.WEAPON);
+
+        //TODO load if items are purchased or equipped
+
+        knight.getmInv().addItem(wizHat).addItem(steelHelm).addItem(vikingHelm);
+        knight.getmInv().addItem(wizCloak).addItem(steelPlate).addItem(vikingArmor);
+        knight.getmInv().addItem(staff).addItem(sword).addItem(axe);
     }
 }
