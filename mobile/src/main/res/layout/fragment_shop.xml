@@ -228,7 +228,7 @@
             android:id="@+id/hand_weapon"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/oakstaff"
+            android:src="@drawable/battle_axe"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
