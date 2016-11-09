@@ -30,8 +30,6 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private Button buttonSignup;
 
-
-
     private ProgressDialog progressDialog;
 
 
