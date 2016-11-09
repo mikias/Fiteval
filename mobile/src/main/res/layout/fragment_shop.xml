@@ -29,17 +29,18 @@
 
         <ImageView
             android:id="@+id/iv_wizard_hat"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
+
             android:layout_marginLeft="10dp"
             android:src="@drawable/wizard_hat"
             tools:ignore="ContentDescription,RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_steel_helm"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -47,8 +48,8 @@
             tools:ignore="RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_viking_helmet"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -82,8 +83,8 @@
 
         <ImageView
             android:id="@+id/iv_wizard_cloak"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -91,8 +92,8 @@
             tools:ignore="RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_steelplate"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -100,8 +101,8 @@
             tools:ignore="RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_viking_armor"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -110,37 +111,12 @@
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Shoes"
-        android:layout_below="@id/layout_armor"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tv_shoes"
-        tools:ignore="HardcodedText"/>
-
-    <LinearLayout
-        android:id="@+id/layout_shoes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/solid_white_rounded_corner"
-        android:layout_below="@+id/tv_shoes"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
     <!--WEAPONS-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Weapon"
-        android:layout_below="@id/layout_shoes"
+        android:layout_below="@id/layout_armor"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/tv_weapon"
@@ -160,8 +136,8 @@
 
         <ImageView
             android:id="@+id/iv_oakstaff"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -170,16 +146,17 @@
 
         <ImageView
             android:id="@+id/iv_sword"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/solid_white_rounded_corner"
             android:src="@drawable/sword"
             tools:ignore="RtlHardcoded"/>
         <ImageView
             android:id="@+id/iv_battle_axe"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="10dp"
             android:background="@drawable/solid_white_rounded_corner"
             android:layout_marginLeft="10dp"
@@ -210,7 +187,7 @@
             android:id="@+id/hand_helmet"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/wizard_hat"
+            android:src="@drawable/hand"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
@@ -219,7 +196,7 @@
             android:id="@+id/hand_armor"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/wizard_cloak"
+            android:src="@drawable/hand"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
@@ -228,7 +205,7 @@
             android:id="@+id/hand_weapon"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:src="@drawable/battle_axe"
+            android:src="@drawable/hand"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
             android:layout_alignStart="@+id/iv_avatar"/>
