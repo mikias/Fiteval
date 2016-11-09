@@ -4,221 +4,93 @@
     android:layout_height="match_parent"
     tools:context="com.fiteval.ui.fragment.ShopFragment">
 
-    <!--HELMETS-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Helmet"
-        android:layout_above="@+id/layout_helmet"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tv_helmet"
-        tools:ignore="HardcodedText"/>
-
     <LinearLayout
-        android:id="@+id/layout_helmet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/solid_white_rounded_corner"
-        android:layout_below="@+id/layout_avatar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragment_shop_btn"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_wizard_hat"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
+        <LinearLayout
+            android:id="@+id/fragment_shop_layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1.2"
             android:background="@drawable/solid_white_rounded_corner"
+            android:orientation="horizontal">
 
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/wizard_hat"
-            tools:ignore="ContentDescription,RtlHardcoded"/>
-        <ImageView
-            android:id="@+id/iv_steel_helm"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_shop_nickname"
+                android:gravity="center"
+                android:text="SilverKnight"
+                android:textSize="@dimen/activity_main_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_shop_layout_center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/solid_white_rounded_corner">
+
+                <ImageView
+                    android:id="@+id/fragment_shop_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/knight" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/solid_white_rounded_corner">
+
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></GridView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_shop_layout_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/steel_helm"
-            tools:ignore="RtlHardcoded"/>
-        <ImageView
-            android:id="@+id/iv_viking_helmet"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/viking_helmet"
-            tools:ignore="RtlHardcoded"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fragment_shop_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="[ Beginner's Long Sword ]\nAttack: +10\nPrice: 300 Gold"
+                android:textSize="20dp" />
+        </LinearLayout>
     </LinearLayout>
 
-
-    <!--ARMOR-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Armor"
-        android:layout_below="@id/layout_helmet"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tv_armor"
-        tools:ignore="HardcodedText"/>
-
-    <LinearLayout
-        android:id="@+id/layout_armor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/solid_white_rounded_corner"
-        android:layout_below="@+id/tv_armor"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-        <ImageView
-            android:id="@+id/iv_wizard_cloak"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/wizard_cloak"
-            tools:ignore="RtlHardcoded"/>
-        <ImageView
-            android:id="@+id/iv_steelplate"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/steelplate_body"
-            tools:ignore="RtlHardcoded"/>
-        <ImageView
-            android:id="@+id/iv_viking_armor"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/viking_armor"
-            tools:ignore="RtlHardcoded"/>
-    </LinearLayout>
-
-
-    <!--WEAPONS-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weapon"
-        android:layout_below="@id/layout_armor"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/tv_weapon"
-        tools:ignore="HardcodedText"/>
-
-    <LinearLayout
-        android:id="@+id/layout_weapon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/solid_white_rounded_corner"
-        android:layout_below="@+id/tv_weapon"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-        <ImageView
-            android:id="@+id/iv_oakstaff"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/oakstaff"
-            tools:ignore="RtlHardcoded"/>
-
-        <ImageView
-            android:id="@+id/iv_sword"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:src="@drawable/sword"
-            tools:ignore="RtlHardcoded"/>
-        <ImageView
-            android:id="@+id/iv_battle_axe"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/solid_white_rounded_corner"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/battle_axe"
-            tools:ignore="RtlHardcoded"/>
-    </LinearLayout>
-
-
-    <!--Main Avatar-->
-    <RelativeLayout
-        android:id="@+id/layout_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/solid_white_rounded_corner"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="100dp"
-            android:layout_height="125dp"
-            android:layout_margin="40dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/nude_male"
-            tools:ignore="RtlHardcoded"/>
-
-        <ImageView
-            android:id="@+id/hand_helmet"
-            android:layout_width="100dp"
-            android:layout_height="125dp"
-            android:src="@drawable/hand"
-            android:layout_alignTop="@+id/iv_avatar"
-            android:layout_alignLeft="@+id/iv_avatar"
-            android:layout_alignStart="@+id/iv_avatar"/>
-
-        <ImageView
-            android:id="@+id/hand_armor"
-            android:layout_width="100dp"
-            android:layout_height="125dp"
-            android:src="@drawable/hand"
-            android:layout_alignTop="@+id/iv_avatar"
-            android:layout_alignLeft="@+id/iv_avatar"
-            android:layout_alignStart="@+id/iv_avatar"/>
-
-        <ImageView
-            android:id="@+id/hand_weapon"
-            android:layout_width="100dp"
-            android:layout_height="125dp"
-            android:src="@drawable/hand"
-            android:layout_alignTop="@+id/iv_avatar"
-            android:layout_alignLeft="@+id/iv_avatar"
-            android:layout_alignStart="@+id/iv_avatar"/>
-
-        <ImageView
-            android:id="@+id/hand_on"
-            android:layout_width="100dp"
-            android:layout_height="125dp"
-            android:src="@drawable/hand"
-            android:layout_alignTop="@+id/iv_avatar"
-            android:layout_alignLeft="@+id/iv_avatar"
-            android:layout_alignStart="@+id/iv_avatar"/>
-
-    </RelativeLayout>
-
+    <Button
+        android:id="@+id/fragment_shop_btn"
+        style="@style/bottom_button_style"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="BUY" />
 </RelativeLayout>

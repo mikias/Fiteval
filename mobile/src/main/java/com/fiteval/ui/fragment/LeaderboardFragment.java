@@ -3,107 +3,112 @@ package com.fiteval.ui.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.fiteval.R;
+import com.fiteval.ui.adapter.LeaderboardListAdapter;
+import com.fiteval.ui.item.LeaderboardListItem;
+import com.fiteval.util.MiscUtil;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LeaderboardFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LeaderboardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class LeaderboardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static final String TAG = MainFragment.class.getName();
 
-    private OnFragmentInteractionListener mListener;
+    private Context mContext;
+    private CheckBox mCheckBox;
+    private ListView mListView;
+    private ProgressBar mLoadingProgress;
+    private LeaderboardListAdapter mAdapter;
+    private MiscUtil mUtils;
 
-    public LeaderboardFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LeaderboardFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String param1, String param2) {
-        LeaderboardFragment fragment = new LeaderboardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mContext = getActivity();
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leaderboard, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+
+        mContext = getActivity();
+        mCheckBox = (CheckBox) root.findViewById(R.id.fragment_leaderboard_checkbox);
+        mListView = (ListView) root.findViewById(R.id.fragment_leaderboard_listview);
+        mLoadingProgress = (ProgressBar) root.findViewById(R.id.fragment_leaderboard_progress);
+
+        mUtils = new MiscUtil(mContext);
+        mCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUtils.toastCenter("To Be Implemented");
+            }
+        });
+
+        List<LeaderboardListItem> list = new ArrayList<>();
+        list.add(new LeaderboardListItem("1", "GoldKnight", "85"));
+        list.add(new LeaderboardListItem("2", "SilverKnight", "76"));
+        list.add(new LeaderboardListItem("3", "BronzeKnight", "53"));
+        list.add(new LeaderboardListItem("4", "Henry", "45"));
+        list.add(new LeaderboardListItem("5", "Mikias", "42"));
+        list.add(new LeaderboardListItem("6", "Nader", "37"));
+        list.add(new LeaderboardListItem("7", "Travis", "35"));
+        list.add(new LeaderboardListItem("8", "McCrickard", "24"));
+        list.add(new LeaderboardListItem("10", "Reinhardt", "20"));
+        list.add(new LeaderboardListItem("11", "Lucio", "17"));
+        list.add(new LeaderboardListItem("12", "Symmetra", "9"));
+        populateList(list);
+
+        return root;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void populateList(List<LeaderboardListItem> list) {
+        mAdapter = new LeaderboardListAdapter(mContext, list);
+
+        // simulate network loading
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingWait();
+                mListView.setAdapter(mAdapter);
+            }
+        }, 1000);
+    }
+
+    private void dismissLoadingWait() {
+        mLoadingProgress.setVisibility(View.GONE);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        mCallback = (Callback) context;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+    private Callback mCallback;
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface Callback {
+
+        void updateToolbarTitle(String title);
     }
 }

@@ -2,8 +2,6 @@ package com.fiteval.ui.activity;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -12,10 +10,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
@@ -25,15 +23,21 @@ import com.fiteval.model.Equipment;
 import com.fiteval.model.InvSlots;
 import com.fiteval.model.Knight;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
+import com.fiteval.ui.fragment.LeaderboardFragment;
 import com.fiteval.ui.fragment.MainFragment;
 import com.fiteval.ui.fragment.NavigationFragment;
+import com.fiteval.ui.fragment.RaidFragment;
 import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener,
         DrawerLayout.DrawerListener,
-        NavigationFragment.Callback {
+        NavigationFragment.Callback,
+        LeaderboardFragment.Callback,
+        MainFragment.Callback,
+        RaidFragment.Callback,
+        ShopFragment.Callback {
 
     private final static int mContainerFragment = R.id.activity_main_container;
 
@@ -48,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Context mContext;
     private FragmentManager mFragManager;
     private Fragment mFragment;
-
-    private TextView heartBeatTextView;
 
     // -------------------------------------------------------
     public Knight knight;
@@ -224,27 +226,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // =============================================================================================
     @Override
     public void navigationListOnClick(View v) {
+        Fragment currentFrag;
+
         switch (v.getId()) {
             case R.id.fragment_navigation_drawer_btn_main:
-                mUtil.toastCenter("MAIN Clicked");
                 mToolbar.setTitle("Avatar");
+                currentFrag = mFragManager.findFragmentById(mContainerFragment);
+                if (currentFrag instanceof MainFragment) {
+                    forceUpdateView(currentFrag);
+                } else {
+                    clearBackStack();
+                    mFragment = new MainFragment();
+                    switchFragment(MainFragment.TAG);
+                }
                 break;
 
             case R.id.fragment_navigation_drawer_btn_raid:
-                mUtil.toastCenter("RAID Clicked");
+                mUtil.toastCenter("Raid fragment is not implemented yet");
                 mToolbar.setTitle("RaidFragment");
                 break;
 
             case R.id.fragment_navigation_drawer_btn_leaderboard:
-                mToolbar.setTitle("Leaderboard");
-                mUtil.toastCenter("LEADERBOARD Clicked");
+                currentFrag = mFragManager.findFragmentById(mContainerFragment);
+                if (currentFrag instanceof LeaderboardFragment) {
+                    forceUpdateView(currentFrag);
+                } else {
+                    clearBackStack();
+                    mFragment = new LeaderboardFragment();
+                    switchFragment(LeaderboardFragment.TAG);
+                }
                 break;
 
             case R.id.fragment_navigation_drawer_btn_shop:
-                mUtil.toastCenter("SHOP Clicked");
                 mToolbar.setTitle("Shop");
-                mFragment = new ShopFragment();
-                switchFragment(ShopFragment.TAG);
+                currentFrag = mFragManager.findFragmentById(mContainerFragment);
+                if (currentFrag instanceof ShopFragment) {
+                    forceUpdateView(currentFrag);
+                } else {
+                    clearBackStack();
+                    mFragment = new ShopFragment();
+                    switchFragment(ShopFragment.TAG);
+                }
                 break;
         }
     }
@@ -280,5 +302,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         knight.getmInv().addItem(wizHat).addItem(steelHelm).addItem(vikingHelm);
         knight.getmInv().addItem(wizCloak).addItem(steelPlate).addItem(vikingArmor);
         knight.getmInv().addItem(staff).addItem(sword).addItem(axe);
+    }
+
+    private void clearBackStack() {
+        try {
+            String firstTag = mFragManager.getBackStackEntryAt(0).getName();
+            mFragManager.popBackStackImmediate(firstTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } catch (IndexOutOfBoundsException ie) {
+            ie.printStackTrace();
+        } catch (NullPointerException ne) {
+            Log.e("clearBackStack", "getBackStackEntry calling on null stack");
+            ne.printStackTrace();
+        }
+    }
+
+    private void forceUpdateView(Fragment fragment) {
+        mFragManager.beginTransaction()
+                .detach(fragment)
+                .attach(fragment)
+                .commit();
+    }
+
+    @Override
+    public void updateToolbarTitle(String title) {
+        Toolbar toolbar = getToolbar();
+        CharSequence oldTitle = toolbar.getTitle();
+        if (oldTitle == null || !oldTitle.equals(title)) {
+            toolbar.setTitle(title);
+        }
     }
 }
