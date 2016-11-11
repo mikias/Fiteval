@@ -1,23 +1,22 @@
 package com.fiteval.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.fiteval.R;
+import com.fiteval.controller.ExperienceService;
 import com.fiteval.controller.HeartReader;
 import com.fiteval.model.Equipment;
 import com.fiteval.model.InvSlots;
@@ -30,6 +29,8 @@ import com.fiteval.ui.fragment.NavigationFragment;
 import com.fiteval.ui.fragment.RaidFragment;
 import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener,
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Context mContext;
     private FragmentManager mFragManager;
     private Fragment mFragment;
+    private Intent mServiceIntent;
 
     // -------------------------------------------------------
     public Knight knight;
@@ -74,8 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //TODO: check if a knight save exists or if the user exists and pull the info
-        knight = new Knight();
+        knight = new Knight(2000, 10000, new Inventory(new ArrayList<Equipment>()));
         loadItems();
+
+        mServiceIntent = new Intent(this, ExperienceService.class);
+        startService(mServiceIntent);
     }
 
 
