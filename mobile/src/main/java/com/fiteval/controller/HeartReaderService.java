@@ -12,7 +12,7 @@ import com.google.android.gms.wearable.WearableListenerService;
 /**
  * Created by uwe on 23.03.15.
  */
-public class HeartReader extends WearableListenerService {
+public class HeartReaderService extends WearableListenerService {
 
     private static final String LOG_TAG = "WearableListener";
     public static final String HEARTBEAT = "HEARTBEAT";
@@ -25,7 +25,7 @@ public class HeartReader extends WearableListenerService {
     }
 
     public static void setHandler(Handler handler) {
-        HeartReader.handler = handler;
+        HeartReaderService.handler = handler;
         // send current value as initial value.
         if(handler!=null)
             handler.sendEmptyMessage(currentValue);
