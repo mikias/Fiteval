@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Intent mServiceIntent;
 
     // -------------------------------------------------------
-    public Knight knight;
+    public static Knight knight;
 
     public int mHeartRate;
 
@@ -95,22 +95,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //handles heart reading
     @Override
     protected void onResume() {
+        Log.d("Resume", "resumed");
         Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 // message from API client! message from wear! The contents is the heartbeat.
                 //textView.setText(Integer.toString(msg.what));
                 mHeartRate = msg.what;
-
+                Log.d("Handler", "Heartrate read");
                 Fragment currentFrag = mFragManager.findFragmentById(mContainerFragment);
                 if (currentFrag instanceof MainFragment) {
                     TextView tv = (TextView) findViewById(R.id.fragment_main_bpm);
+                    Log.d("Handler", tv.getText().toString());
                     tv.setText(mHeartRate);
                 }
             }
         };
         // register our handler with the HeartReader. This ensures we get messages whenever the service receives something.
         HeartReaderService.setHandler(handler);
+        Log.d("Handler", "handler set");
         super.onResume();
     }
 

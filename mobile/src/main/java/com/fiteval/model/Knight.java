@@ -13,7 +13,6 @@ import static com.fiteval.model.InvSlots.WEAPON;
 //TODO create tostrings for all
 public class Knight implements Inventory.InventoryListener {
     private int mGold;
-    private long mExp;
 
     private Inventory mInv;
 
@@ -22,15 +21,18 @@ public class Knight implements Inventory.InventoryListener {
     private Equipment mWeapon;
     private Equipment mBoots;
 
+    private int mExperience;
+    private int mExperienceRemaining;
+    private int mLevel;
+
     private boolean mInit;
 
     public Knight() {
         new Knight(2000, 10000, new Inventory(new ArrayList<Equipment>()));
     }
 
-    public Knight(int gold, long exp, Inventory inv){
+    public Knight(int gold, int exp, Inventory inv){
         mGold = gold;
-        mExp = exp;
         mInv = inv;
 
         mInv.setmListener(this);
@@ -39,6 +41,10 @@ public class Knight implements Inventory.InventoryListener {
         mArmor = new Equipment();
         mWeapon = new Equipment();
         mBoots = new Equipment();
+
+        mLevel = 1;
+        mExperience = exp;
+        mExperienceRemaining = 1312;
 
         mInit = true;
     }
@@ -49,14 +55,6 @@ public class Knight implements Inventory.InventoryListener {
 
     public Inventory getmInv() {
         return mInv;
-    }
-
-    public long getmExp() {
-        return mExp;
-    }
-
-    public void setmExp(long mExp) {
-        this.mExp = mExp;
     }
 
     public int getmGold() {
@@ -111,6 +109,45 @@ public class Knight implements Inventory.InventoryListener {
 
     public void setmBoots(Equipment mBoots) {
         this.mBoots = mBoots;
+    }
+
+    public int getmExperience() {
+        return mExperience;
+    }
+
+    public void setmExperience(int mExperience) {
+        this.mExperience = mExperience;
+    }
+
+    public int getmExperienceRemaining() {
+        return mExperienceRemaining;
+    }
+
+    public void setmExperienceRemaining(int mExperienceRemaining) {
+        this.mExperienceRemaining = mExperienceRemaining;
+    }
+
+    public int getmLevel() {
+        return mLevel;
+    }
+
+    public void setmLevel(int mLevelLevel) {
+        this.mLevel = mLevelLevel;
+    }
+
+    public void incExp() {
+        mExperience++;
+    }
+
+    public void levelUp() {
+        if (mLevel != 50) {
+            mLevel++;
+            mExperience = 0;
+            mExperienceRemaining = mLevel * 2 * 1312;
+        } else {
+            mExperience = 1;
+            mExperienceRemaining = 0;
+        }
     }
 
     //TODO add events that update exp and gold

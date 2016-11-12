@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.fiteval.ui.activity.MainActivity;
+
 /**
  * Created by nader on 11/11/16.
  */
@@ -50,6 +52,12 @@ public class ExperienceService extends Service implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             steps++;
+            if (MainActivity.knight != null) {
+                MainActivity.knight.incExp();
+                if (MainActivity.knight.getmExperience() == MainActivity.knight.getmExperienceRemaining()) {
+                    MainActivity.knight.levelUp();
+                }
+            }
             Log.d("Step Service", "Steps so far: " + steps);
             //main.getKnight().addExp(calcExp());
         }

@@ -22,8 +22,6 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
 
     private TextView mTextView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +34,10 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
             public void onLayoutInflated(WatchViewStub stub) {
                 // as soon as layout is there...
                 mTextView = (TextView) stub.findViewById(R.id.heartbeat);
+                Log.d("main", "starting activity");
+                startService(new Intent(MainActivity.this, HbService.class));
                 // bind to our service.
-                bindService(new Intent(MainActivity.this, HeartbeatService.class), new ServiceConnection() {
+                /*bindService(new Intent(MainActivity.this, HeartbeatService.class), new ServiceConnection() {
                     @Override
                     public void onServiceConnected(ComponentName componentName, IBinder binder) {
                         Log.d(LOG_TAG, "connected to service.");
@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
                     public void onServiceDisconnected(ComponentName componentName) {
 
                     }
-                }, Service.BIND_AUTO_CREATE);
+                }, Service.BIND_AUTO_CREATE);*/
             }
         });
     }
@@ -62,6 +62,6 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
     @Override
     public void onValueChanged(int newValue) {
         // will be called by the service whenever the heartbeat value changes.
-        mTextView.setText(Integer.toString(newValue));
+        //mTextView.setText(Integer.toString(newValue));
     }
 }
