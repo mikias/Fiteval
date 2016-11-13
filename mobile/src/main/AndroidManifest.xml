@@ -38,8 +38,15 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ui.activity.SignUpActivity"
+            android:label="@string/signup_btn"/>
+        <activity
+            android:name=".ui.activity.ForgotPasswordActivity"
+            android:label="@string/btn_reset_password"/>
 
         <service android:name=".controller.ExperienceService"/>
         <service android:name=".controller.HeartReaderService"/>
     </application>
 </manifest>
+
