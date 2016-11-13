@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Mikias Alemu on 11/01/2016.
@@ -28,19 +30,29 @@ public class SignUpActivity extends AppCompatActivity {
     //defining view objects
     private EditText editTextEmail;
     private EditText editTextPassword;
+
+    private EditText editTextFirstName;
+    private EditText editTextLastName;
+
     private Button buttonSignup;
 
+
     private ProgressDialog progressDialog;
+
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mConditionRef= mRootRef.child("condition");
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
+        buttonSignup = (Button) findViewById(R.id.buttonSignup);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        buttonSignup = (Button) findViewById(R.id.buttonSignup);
+//        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
+//        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
+
 
         progressDialog = new ProgressDialog(this);
 
@@ -59,8 +71,11 @@ public class SignUpActivity extends AppCompatActivity {
         //getting email and password from edit texts
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+//        String first_name = editTextFirstName.getText().toString().trim();
+//        String last_name = editTextLastName.getText().toString().trim();
 
         //checking if email and passwords are empty
+
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
@@ -95,4 +110,5 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
