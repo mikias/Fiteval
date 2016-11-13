@@ -1,19 +1,24 @@
 package com.fiteval.ui.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.fiteval.R;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.util.MiscUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -34,6 +39,7 @@ public class LoginActivity extends Activity {
     private MiscUtil mUtils;
     private SimpleAlertDialog mDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,7 @@ public class LoginActivity extends Activity {
         mDialog = new SimpleAlertDialog(this);
         mAuth = FirebaseAuth.getInstance();
         initView();
+
     }
 
     private void initView() {
@@ -69,7 +76,6 @@ public class LoginActivity extends Activity {
             }
         });
 
-
         mSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,16 +86,19 @@ public class LoginActivity extends Activity {
         mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
             }
         });
 
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(intent);
             }
         });
+
     }
 
     /**
@@ -126,22 +135,21 @@ public class LoginActivity extends Activity {
             }
         }, 1000);
 
-
-        // not working
-        /*
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this,
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this,
                 new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                mProgress.cancel();
+
                 if (task.isSuccessful()){
-                    mUtils.toastCheckMark();
+                    Toast.makeText(LoginActivity.this,"Successfully signed in", Toast.LENGTH_LONG).show();
                 }else{
-                    mUtils.toastXMark();
-                    mUtils.toastLong("There was an error...");
+                    Toast.makeText(LoginActivity.this,"There was an error....", Toast.LENGTH_LONG).show();
+
                 }
+
+
             }
         });
-        */
     }
+
 }
