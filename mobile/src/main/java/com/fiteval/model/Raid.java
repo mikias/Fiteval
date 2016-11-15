@@ -1,6 +1,7 @@
 package com.fiteval.model;
 
 import android.location.Location;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by nader on 11/15/16.
@@ -28,5 +29,10 @@ public class Raid {
 
     public int getPhoto() {
         return photo;
+    }
+    
+    public int useRaid() {
+        MainActivity.knight.gold = ThreadLocalRandom.current().nextInt(25, 76);
+        return MainActivity.knight.gold;
     }
 }
