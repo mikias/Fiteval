@@ -322,10 +322,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commit();
     }
 
+    public Equipment wizHat, steelHelm, vikingHelm;
+    public Equipment wizCloak, steelPlate, vikingArmor;
+    public Equipment staff, sword, axe;
+
     private void loadItems() {
-        Equipment wizHat, steelHelm, vikingHelm;
-        Equipment wizCloak, steelPlate, vikingArmor;
-        Equipment staff, sword, axe;
 
         //Equipment statements require these params:
         //boolean equipped, boolean purchased, String name, int cost, InvSlots slot

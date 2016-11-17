@@ -1,5 +1,6 @@
 package com.fiteval.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 //TODO read from a save file
 
-public class Inventory {
+public class Inventory extends ArrayList<Equipment> {
 
     ArrayList<Equipment> mEquipmentList;
     InventoryListener mListener;
@@ -26,7 +27,6 @@ public class Inventory {
         if(item.isEquipped() && mListener != null) {
             mListener.equipItem(item);
         }
-
         return this;
     }
 

@@ -190,9 +190,10 @@ public class Knight implements Inventory.InventoryListener {
 //        final int k_age = MainActivity.knight.getmAge();
 //        final Inventory k_inv = MainActivity.knight.getmInv();
         //add user to the database
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        Knight knight_info = this;
-        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
+
+//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+//        Knight knight_info = this;
+//        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
 
     }
 
