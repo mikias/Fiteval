@@ -1,5 +1,8 @@
 package com.fiteval.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 import static com.fiteval.model.InvSlots.ARMOR;
@@ -31,6 +34,7 @@ public class Knight implements Inventory.InventoryListener {
 
     private int mAge;
     public int steps;
+    private DatabaseReference mFirebaseDatabaseReference;
 
     public Knight() {
         new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
@@ -176,6 +180,20 @@ public class Knight implements Inventory.InventoryListener {
     public interface KnightListener {
         void readKnight();
         void update(int exp, int gold);
+    }
+
+    public void save(){
+//
+//        final int k_gold = MainActivity.knight.getmGold();
+//        final int k_level = MainActivity.knight.getmLevel();
+//        final Genders k_gender = MainActivity.knight.getmGender();
+//        final int k_age = MainActivity.knight.getmAge();
+//        final Inventory k_inv = MainActivity.knight.getmInv();
+        //add user to the database
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        Knight knight_info = this;
+        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
+
     }
 
 }

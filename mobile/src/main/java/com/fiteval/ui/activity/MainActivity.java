@@ -33,6 +33,7 @@ import com.fiteval.ui.fragment.NavigationFragment;
 import com.fiteval.ui.fragment.RaidFragment;
 import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar mToolbar;
     private MiscUtil mUtil;
     private SimpleAlertDialog mDialog;
+    private DatabaseReference mFirebaseDatabaseReference;
 
     // -------------------------------------------------------
     private Context mContext;
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         raids = RaidList.createList();
 
         knight = new Knight();
+        knight.save();
         loadItems();
 
         mServiceIntent = new Intent(this, ExperienceService.class);
@@ -105,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startService(mServiceIntent);
 
     }
+
+
 
 
     //handles heart reading
