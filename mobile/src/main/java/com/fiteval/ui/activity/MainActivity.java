@@ -33,6 +33,8 @@ import com.fiteval.ui.fragment.NavigationFragment;
 import com.fiteval.ui.fragment.RaidFragment;
 import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDialog = new SimpleAlertDialog(this);
         initToolbar();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
         mFragment = new MainFragment();
         mToolbar.setTitle("Avatar");
         switchFragment(MainFragment.TAG);
@@ -87,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //TODO: check if a knight save exists or if the user exists and pull the info
         raids = RaidList.createList();
 
-        knight = new Knight(2000, 10000, new Inventory(new ArrayList<Equipment>()));
+        knight = new Knight();
         loadItems();
 
         mServiceIntent = new Intent(this, ExperienceService.class);

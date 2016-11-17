@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fiteval.R;
+import com.fiteval.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,7 @@ public class MainFragment extends Fragment {
     }
     private void applyData() {
         mBpm.setText("105");
-        mStep.setText("11234");
+        mStep.setText(MainActivity.knight.steps);
         mLevel.setText("17");
         mExp.setText("1020/1500");
         mGold.setText("46007");

@@ -30,6 +30,7 @@ public class Knight implements Inventory.InventoryListener {
     private boolean mInit;
 
     private int mAge;
+    public int steps;
 
     public Knight() {
         new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
@@ -100,6 +101,7 @@ public class Knight implements Inventory.InventoryListener {
 
     public void setmArmor(Equipment mArmor) {
         this.mArmor = mArmor;
+        save();
     }
 
     public Equipment getmWeapon() {
@@ -144,6 +146,11 @@ public class Knight implements Inventory.InventoryListener {
 
     public void incExp() {
         mExperience++;
+    }
+
+    public void setmAge(int age) {
+        this.mAge = age;
+        save();
     }
 
     public void levelUp() {

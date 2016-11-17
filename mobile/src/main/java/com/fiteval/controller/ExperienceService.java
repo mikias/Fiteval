@@ -18,7 +18,6 @@ import com.fiteval.ui.activity.MainActivity;
 
 public class ExperienceService extends Service implements SensorEventListener {
 
-    private int steps = 0;
     private SensorManager mSensorManager;
     private Sensor mStepCtr;
 
@@ -53,14 +52,14 @@ public class ExperienceService extends Service implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            steps++;
+            MainActivity.knight.steps++;
             if (MainActivity.knight != null) {
                 MainActivity.knight.incExp();
                 if (MainActivity.knight.getmExperience() == MainActivity.knight.getmExperienceRemaining()) {
                     MainActivity.knight.levelUp();
                 }
             }
-            Log.d("Step Service", "Steps so far: " + steps);
+            Log.d("Step Service", "Steps so far: " + MainActivity.knight.steps);
             //main.getKnight().addExp(calcExp());
         }
     }

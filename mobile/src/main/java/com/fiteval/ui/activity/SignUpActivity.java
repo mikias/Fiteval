@@ -25,26 +25,20 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class SignUpActivity extends AppCompatActivity {
 
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mConditionRef = mRootRef.child("condition");
     //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
-
     //defining view objects
     private EditText editTextEmail;
     private EditText editTextPassword;
-
     private EditText editTextFirstName;
     private EditText editTextLastName;
-
+    private EditText editTextAge;
     private Button buttonSignup;
-
-
     private ProgressDialog progressDialog;
-
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mConditionRef= mRootRef.child("condition");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +49,15 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) findViewById(R.id.editTextLastName);
+        editTextAge = (EditText) findViewById(R.id.editTextAge);
+        //spannerGender = (Spanner) find
 
 
         progressDialog = new ProgressDialog(this);
-       //name and email
+        //name and email
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
-
 
 
         buttonSignup.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         final String first_name = editTextFirstName.getText().toString().trim();
         final String last_name = editTextLastName.getText().toString().trim();
+        int age = Integer.parseInt(editTextAge.getText().toString().trim());
 
         //checking if email and passwords are empty
 
@@ -102,6 +98,11 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+        if (age <= 12) {
+            Toast.makeText(this, "Please enter a valid age", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //add user to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         progressDialog.setMessage("Registering Please Wait...");
@@ -115,11 +116,11 @@ public class SignUpActivity extends AppCompatActivity {
                         //checking if success
                         if (task.isSuccessful()) {
                             //display some message here
-                            Toast.makeText(SignUpActivity.this, "Successfully registered "+ firebaseAuth.getCurrentUser().getUid().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, "Successfully registered " + firebaseAuth.getCurrentUser().getUid().toString(), Toast.LENGTH_LONG).show();
 
                             String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
 
-                            User_Info u_info = new User_Info(user_uid,first_name,last_name,email);
+                            User_Info u_info = new User_Info(user_uid, first_name, last_name, email);
                             mFirebaseDatabaseReference.child("user_info").push().setValue(u_info);
 
                         } else {
@@ -129,6 +130,8 @@ public class SignUpActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 });
+
+        MainActivity.knight.setmAge(age);
     }
 
 }
