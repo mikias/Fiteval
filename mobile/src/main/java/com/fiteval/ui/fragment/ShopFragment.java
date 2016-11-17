@@ -72,9 +72,48 @@ public class ShopFragment extends Fragment {
         mIVSword = (ImageView) container.findViewById(R.id.iv_sword);
         mIVBattleAxe = (ImageView) container.findViewById(R.id.iv_battle_axe);
 
-        //TODO FOR NADER: CONTINUE HERE
+        //Change items
+        mIVWizardHat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                mIVSteelHelm.setVisibility(View.INVISIBLE);
+                mIVVikingHelm.setVisibility(View.INVISIBLE);
+                mIVWizardHat.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mIVSteelHelm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                mIVVikingHelm.setVisibility(View.INVISIBLE);
+                mIVWizardHat.setVisibility(View.INVISIBLE);
+                mIVSteelHelm.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mIVVikingHelm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                mIVWizardHat.setVisibility(View.INVISIBLE);
+                mIVSteelHelm.setVisibility(View.INVISIBLE);
+                mIVVikingHelm.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+
+
 
         return view;
+    }
+
+    @Override
+    public void removeItem()
+    {
+
     }
 
     @Override
