@@ -63,6 +63,7 @@ public class HeartbeatService extends Service implements SensorEventListener {
         super.onCreate();
         // register us as a sensor listener
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Log.d(LOG_TAG, "Before sensor");
         Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         // delay SENSOR_DELAY_UI is sufficiant
         boolean res = mSensorManager.registerListener(this, mHeartRateSensor, SensorManager.SENSOR_DELAY_UI);

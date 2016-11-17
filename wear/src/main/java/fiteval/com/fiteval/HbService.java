@@ -60,12 +60,19 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
         }
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
         Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
         Log.d("HB Service", "Hb service started");
+        Log.e("HB Service", "Sensor: " + mHeartRateSensor);
+        Log.e("HB Service", "This: " + this);
+
+        for (Sensor sensor : mSensorManager.getSensorList(Sensor.TYPE_ALL)) {
+            Log.e("HB Service", sensor.getName() + ": " + sensor.getType());
+        }
 
         // Register for sensor events
-        mSensorManager.registerListener(this, mHeartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mHeartRateSensor, SensorManager.SENSOR_DELAY_UI);
 
         Log.d("HB Service", "Hb service rehgistered");
         super.onCreate();
@@ -83,7 +90,8 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
 
         Log.d("HB Service", Sensor.TYPE_HEART_RATE+" : "+sensorEvent.sensor.getType());
 
-        if (sensorEvent.sensor.getType() == 65538 && sensorEvent.values.length > 0) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_HEART_RATE && sensorEvent.values.length > 0) {
+            Log.d("HB Service", "Heartbeat Read: " + Math.round(sensorEvent.values[0]));
             mHeartbeat = Math.round(sensorEvent.values[0]);
 
             Log.d("HB service", "heartbeat: " + mHeartbeat);

@@ -65,7 +65,7 @@ public class MainFragment extends Fragment {
     }
     private void applyData() {
         mBpm.setText("105");
-        mStep.setText("1788");
+        mStep.setText("11234");
         mLevel.setText("17");
         mExp.setText("1020/1500");
         mGold.setText("46007");

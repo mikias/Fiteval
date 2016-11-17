@@ -38,6 +38,8 @@ public class ExperienceService extends Service implements SensorEventListener {
         // Register for sensor events
         mSensorManager.registerListener(this, mStepCtr, SensorManager.SENSOR_DELAY_NORMAL);
 
+        //mListener = (ExperienceListener) getConte
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -67,4 +69,5 @@ public class ExperienceService extends Service implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
 }

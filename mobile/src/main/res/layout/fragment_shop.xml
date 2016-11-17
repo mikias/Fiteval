@@ -190,7 +190,8 @@
             android:src="@drawable/hand"
             android:layout_alignTop="@+id/iv_avatar"
             android:layout_alignLeft="@+id/iv_avatar"
-            android:layout_alignStart="@+id/iv_avatar"/>
+            android:layout_alignStart="@+id/iv_avatar"
+            tools:ignore="RtlHardcoded"/>
 
         <ImageView
             android:id="@+id/hand_armor"

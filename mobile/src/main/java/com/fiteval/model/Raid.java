@@ -1,6 +1,9 @@
 package com.fiteval.model;
 
 import android.location.Location;
+
+import com.fiteval.ui.activity.MainActivity;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -12,11 +15,13 @@ public class Raid {
     private String name;
     private Location location;
     private int photo;
+    private boolean used;
 
     public Raid(String name, Location location, int photo) {
         this.name = name;
         this.location = location;
         this.photo = photo;
+        this.used = false;
     }
 
     public String getName() {
@@ -31,8 +36,9 @@ public class Raid {
         return photo;
     }
     
-    public int useRaid() {
-        MainActivity.knight.gold = ThreadLocalRandom.current().nextInt(25, 76);
-        return MainActivity.knight.gold;
+    public void useRaid() {
+        MainActivity.knight.setmGold(
+                ThreadLocalRandom.current().nextInt(25, 76) + MainActivity.knight.getmGold());
+        used = true;
     }
 }
