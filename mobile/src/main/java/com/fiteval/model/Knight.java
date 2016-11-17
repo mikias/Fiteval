@@ -25,13 +25,17 @@ public class Knight implements Inventory.InventoryListener {
     private int mExperienceRemaining;
     private int mLevel;
 
+    private Genders mGender;
+
     private boolean mInit;
 
+    private int mAge;
+
     public Knight() {
-        new Knight(2000, 10000, new Inventory(new ArrayList<Equipment>()));
+        new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
     }
 
-    public Knight(int gold, int exp, Inventory inv){
+    public Knight(int gold, int level, Genders gender, int age, Inventory inv){
         mGold = gold;
         mInv = inv;
 
@@ -42,9 +46,12 @@ public class Knight implements Inventory.InventoryListener {
         mWeapon = new Equipment();
         mBoots = new Equipment();
 
-        mLevel = 1;
-        mExperience = exp;
+        mLevel = level;
+        mExperience = 0;
         mExperienceRemaining = 1312;
+
+        mGender = gender;
+        mAge = age;
 
         mInit = true;
     }
@@ -148,6 +155,14 @@ public class Knight implements Inventory.InventoryListener {
             mExperience = 1;
             mExperienceRemaining = 0;
         }
+    }
+
+    public Genders getmGender() {
+        return mGender;
+    }
+
+    public int getmAge() {
+        return mAge;
     }
 
     //TODO add events that update exp and gold

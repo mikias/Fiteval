@@ -12,15 +12,16 @@ import java.util.ArrayList;
 
 public class RaidList {
 
-    private static ArrayList<Raid> list = new ArrayList<>();
-
-    public RaidList() {
+    public static ArrayList<Raid> createList() {
         Location burrussLoc = new Location("");
+        ArrayList<Raid> list = new ArrayList<>();
         burrussLoc.setLatitude(37.228500);
         burrussLoc.setLongitude(-80.422860);
 
         Raid burruss = new Raid("Burruss Hall", burrussLoc, R.drawable.burruss);
 
         list.add(burruss);
+
+        return list;
     }
 }

@@ -28,11 +28,6 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!shouldShowRequestPermissionRationale(Manifest.permission.BODY_SENSORS)) {
-            requestPermissions(new String[]{Manifest.permission.BODY_SENSORS},
-                    123);
-        }
-
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         // inflate layout depending on watch type (round or square)
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {

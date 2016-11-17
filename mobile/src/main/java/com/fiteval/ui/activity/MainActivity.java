@@ -24,6 +24,8 @@ import com.fiteval.model.Equipment;
 import com.fiteval.model.InvSlots;
 import com.fiteval.model.Inventory;
 import com.fiteval.model.Knight;
+import com.fiteval.model.Raid;
+import com.fiteval.model.RaidList;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.ui.fragment.LeaderboardFragment;
 import com.fiteval.ui.fragment.MainFragment;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // -------------------------------------------------------
     public static Knight knight;
+    public static ArrayList<Raid> raids;
 
     public int mHeartRate;
 
@@ -81,8 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mToolbar.setTitle("Avatar");
         switchFragment(MainFragment.TAG);
 
-
         //TODO: check if a knight save exists or if the user exists and pull the info
+        raids = RaidList.createList();
+
         knight = new Knight(2000, 10000, new Inventory(new ArrayList<Equipment>()));
         loadItems();
 
