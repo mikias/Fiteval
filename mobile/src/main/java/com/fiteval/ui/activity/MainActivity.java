@@ -21,6 +21,7 @@ import com.fiteval.R;
 import com.fiteval.controller.ExperienceService;
 import com.fiteval.controller.HeartReaderService;
 import com.fiteval.model.Equipment;
+import com.fiteval.model.Genders;
 import com.fiteval.model.InvSlots;
 import com.fiteval.model.Inventory;
 import com.fiteval.model.Knight;
@@ -85,10 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initToolbar();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
+
 
         mFragment = new MainFragment();
         mToolbar.setTitle("Avatar");
@@ -97,9 +95,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //TODO: check if a knight save exists or if the user exists and pull the info
         raids = RaidList.createList();
 
-        knight = new Knight();
-        knight.save();
+        knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));;
         loadItems();
+
+        if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        knight.save();
 
         mServiceIntent = new Intent(this, ExperienceService.class);
         startService(mServiceIntent);
