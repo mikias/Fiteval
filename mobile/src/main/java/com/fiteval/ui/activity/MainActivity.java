@@ -3,19 +3,18 @@ package com.fiteval.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.fiteval.R;
@@ -65,8 +64,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int mHeartRate;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button mSignUp = (Button) findViewById(R.id.signup);
+
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         mFragManager = getSupportFragmentManager();
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mServiceIntent = new Intent(this, HeartReaderService.class);
         startService(mServiceIntent);
+
     }
 
 
@@ -97,19 +100,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         Log.d("Resume", "resumed");
         Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                // message from API client! message from wear! The contents is the heartbeat.
-                //textView.setText(Integer.toString(msg.what));
-                mHeartRate = msg.what;
-                Log.d("Handler", "Heartrate read");
-                Fragment currentFrag = mFragManager.findFragmentById(mContainerFragment);
-                if (currentFrag instanceof MainFragment) {
-                    TextView tv = (TextView) findViewById(R.id.fragment_main_bpm);
-                    Log.d("Handler", tv.getText().toString());
-                    tv.setText(mHeartRate);
-                }
-            }
+//            @Override
+//            public void handleMessage(Message msg) {
+//                // message from API client! message from wear! The contents is the heartbeat.
+//                //textView.setText(Integer.toString(msg.what));
+//                mHeartRate = msg.what;
+//                Log.d("Handler", "Heartrate read");
+//                Fragment currentFrag = mFragManager.findFragmentById(mContainerFragment);
+//                if (currentFrag instanceof MainFragment) {
+//                    TextView tv = (TextView) findViewById(R.id.fragment_main_bpm);
+//                    Log.d("Handler", tv.getText().toString());
+//                    tv.setText(mHeartRate);
+//                }
+//            }
         };
         // register our handler with the HeartReader. This ensures we get messages whenever the service receives something.
         HeartReaderService.setHandler(handler);
@@ -351,4 +354,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolbar.setTitle(title);
         }
     }
+
 }
