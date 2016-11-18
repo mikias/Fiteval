@@ -63,7 +63,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 progressDialog.setMessage("Registering Please Wait...");
                 progressDialog.show();
 

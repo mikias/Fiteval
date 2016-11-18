@@ -21,6 +21,7 @@ import com.fiteval.R;
 import com.fiteval.controller.ExperienceService;
 import com.fiteval.controller.HeartReaderService;
 import com.fiteval.model.Equipment;
+import com.fiteval.model.Equipment_Info;
 import com.fiteval.model.Genders;
 import com.fiteval.model.InvSlots;
 import com.fiteval.model.Inventory;
@@ -35,9 +36,9 @@ import com.fiteval.ui.fragment.NavigationFragment;
 import com.fiteval.ui.fragment.RaidFragment;
 import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // -------------------------------------------------------
     public static Knight knight;
     public static Knight_Info knight_info;
+
+    public static Equipment_Info equipment_info;
+
     public static ArrayList<Raid> raids;
     public int mHeartRate;
 
@@ -97,11 +101,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
         String user_uid = user.getUid().toString();
-        knight_info = new Knight_Info(user_uid,2000,20,10);
-        //add knight_info to the database
+        knight_info = new Knight_Info(user_uid,20,2000,10);
+        equipment_info = new Equipment_Info(user_uid,"mike",500,false,false);
+        //add knight_info, equipment_info to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
-
+        mFirebaseDatabaseReference.child("equipment_info").push().setValue(equipment_info);
         loadItems();
 
 //        if (user == null) {
@@ -346,7 +351,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         axe = new Equipment(false, false, "Battle Axe", 1000, InvSlots.WEAPON);
 
         //TODO load if items are purchased or equipped
-
         knight.getmInv().addItem(wizHat).addItem(steelHelm).addItem(vikingHelm);
         knight.getmInv().addItem(wizCloak).addItem(steelPlate).addItem(vikingArmor);
         knight.getmInv().addItem(staff).addItem(sword).addItem(axe);
