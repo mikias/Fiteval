@@ -36,8 +36,12 @@ import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
@@ -98,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth = FirebaseAuth.getInstance();
         String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
         knight = new Knight(user_uid,2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
+        knight.getSteps();
         //add knight, equipment to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseDatabaseReference.child("knight_info").push().setValue(knight);
@@ -114,9 +119,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mServiceIntent = new Intent(this, HeartReaderService.class);
         startService(mServiceIntent);
 
+        DatabaseReference ref = mFirebaseDatabaseReference.getDatabase().getReference();
+
+        //retriving from database
+        //FirebaseDatabase scoresRef = new ("https://fiteval-89566.firebaseio.com/");
+        Query queryRef = ref.child("knight_info").orderByChild("u_id").equalTo(knight.getu_id());
+
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                snapshot.getRef().setValue(null);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                String title = (String) dataSnapshot.child("knight_info").getValue();
+                System.out.println("The knight is changed " + title);
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String title = (String) dataSnapshot.child("knight_info").getValue();
+                System.out.println("The knight is removed " + title + " has been deleted");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    //handles heart reading
+
+        //handles heart reading
     @Override
     protected void onResume() {
         Log.d("Resume", "resumed");

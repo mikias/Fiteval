@@ -33,14 +33,6 @@ public class Knight implements Inventory.InventoryListener {
     private FirebaseAuth firebaseAuth;
     private String u_id;
 
-    public String getu_id() {
-        return u_id;
-    }
-
-    public void setu_id(String u_id) {
-        this.u_id = u_id;
-    }
-
     public Knight() {
         new Knight(this.getu_id() ,this.getmGold(), this.getmLevel(), this.getmGender(), this.getmAge(), new Inventory(new ArrayList<Equipment>()));
     }
@@ -65,6 +57,14 @@ public class Knight implements Inventory.InventoryListener {
         mAge = age;
 
         mInit = true;
+    }
+
+    public String getu_id() {
+        return u_id;
+    }
+
+    public void setu_id(String u_id) {
+        this.u_id = u_id;
     }
 
     public boolean ismInit() {
@@ -171,15 +171,6 @@ public class Knight implements Inventory.InventoryListener {
             mExperienceRemaining = 0;
         }
     }
-
-//    public String getU_id() {
-//        return u_id;
-//    }
-//
-//    public void setU_id(String u_id) {
-//        this.u_id = u_id;
-//    }
-
     public int getSteps() {
         return steps;
     }
