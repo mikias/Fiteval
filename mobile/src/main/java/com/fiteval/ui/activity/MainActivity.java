@@ -25,6 +25,7 @@ import com.fiteval.model.Genders;
 import com.fiteval.model.InvSlots;
 import com.fiteval.model.Inventory;
 import com.fiteval.model.Knight;
+import com.fiteval.model.Knight_Info;
 import com.fiteval.model.Raid;
 import com.fiteval.model.RaidList;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
@@ -37,6 +38,7 @@ import com.fiteval.util.MiscUtil;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -64,19 +66,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager mFragManager;
     private Fragment mFragment;
     private Intent mServiceIntent;
+    private FirebaseAuth firebaseAuth;
 
     // -------------------------------------------------------
     public static Knight knight;
+    public static Knight_Info knight_info;
     public static ArrayList<Raid> raids;
-
     public int mHeartRate;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button mSignUp = (Button) findViewById(R.id.signup);
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         mFragManager = getSupportFragmentManager();
@@ -84,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mUtil = new MiscUtil(this);
         mDialog = new SimpleAlertDialog(this);
         initToolbar();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
         mFragment = new MainFragment();
@@ -95,15 +95,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //TODO: check if a knight save exists or if the user exists and pull the info
         raids = RaidList.createList();
 
-        knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));;
+        knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
+        String user_uid = user.getUid().toString();
+        knight_info = new Knight_Info(user_uid,2000,20,10);
+        //add knight_info to the database
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
+
         loadItems();
 
-        if (user == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
+//        if (user == null) {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            startActivity(intent);
+//        }
 
-        knight.save();
+       // knight.save();
 
         mServiceIntent = new Intent(this, ExperienceService.class);
         startService(mServiceIntent);
@@ -112,9 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startService(mServiceIntent);
 
     }
-
-
-
 
     //handles heart reading
     @Override

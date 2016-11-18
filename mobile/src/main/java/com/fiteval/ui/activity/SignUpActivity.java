@@ -1,7 +1,9 @@
 package com.fiteval.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -49,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) findViewById(R.id.editTextLastName);
-        editTextAge = (EditText) findViewById(R.id.editTextAge);
+        //editTextAge = (EditText) findViewById(R.id.editTextAge);
         //spannerGender = (Spanner) find
 
 
@@ -75,7 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         final String first_name = editTextFirstName.getText().toString().trim();
         final String last_name = editTextLastName.getText().toString().trim();
-        int age = Integer.parseInt(editTextAge.getText().toString().trim());
+//        int age = Integer.parseInt(editTextAge.getText().toString().trim());
 
         //checking if email and passwords are empty
 
@@ -98,15 +100,25 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        if (age <= 12) {
-            Toast.makeText(this, "Please enter a valid age", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if (age <= 12) {
+//            Toast.makeText(this, "Please enter a valid age", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         //add user to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         progressDialog.setMessage("Registering Please Wait...");
         progressDialog.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.cancel();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+                finish();
+            }
+        }, 1000);
 
         //creating a new user
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -131,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
-        MainActivity.knight.setmAge(age);
+      //  MainActivity.knight.setmAge(age);
     }
 
 }

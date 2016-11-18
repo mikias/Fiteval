@@ -10,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.fiteval.R;
 import com.fiteval.ui.activity.MainActivity;
 
 public class ShopFragment extends Fragment implements View.OnClickListener {
-
     public static final String TAG = MainFragment.class.getName();
 
     private ImageView mIVWizardHat;

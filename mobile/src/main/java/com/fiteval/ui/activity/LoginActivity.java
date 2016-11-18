@@ -172,15 +172,15 @@ public class LoginActivity extends Activity implements MediaPlayer.OnPreparedLis
         mProgress.setMessage("Signing in please wait.....");
         mProgress.show();
 
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mProgress.cancel();
-//                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
-//                finish();
-//            }
-//        }, 1000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mProgress.cancel();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+                finish();
+            }
+        }, 1000);
 
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this,
                 new OnCompleteListener<AuthResult>() {
@@ -191,7 +191,7 @@ public class LoginActivity extends Activity implements MediaPlayer.OnPreparedLis
                     Toast.makeText(LoginActivity.this,"Successfully signed in", Toast.LENGTH_LONG).show();
                     mProgress.cancel();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    //overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+                    overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
                     finish();
                 }else{
                     Toast.makeText(LoginActivity.this,"There was an error....", Toast.LENGTH_LONG).show();
