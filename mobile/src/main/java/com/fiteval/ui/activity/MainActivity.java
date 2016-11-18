@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //saving to the database
         firebaseAuth = FirebaseAuth.getInstance();
         String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
-        knight = new Knight(user_uid,2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
         knight.getSteps();
+        knight = new Knight(user_uid,2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
         //add knight, equipment to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseDatabaseReference.child("knight_info").push().setValue(knight);
@@ -119,22 +119,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mServiceIntent = new Intent(this, HeartReaderService.class);
         startService(mServiceIntent);
 
-        DatabaseReference ref = mFirebaseDatabaseReference.getDatabase().getReference();
 
-        //retriving from database
-        //FirebaseDatabase scoresRef = new ("https://fiteval-89566.firebaseio.com/");
-        Query queryRef = ref.child("knight_info").orderByChild("u_id").equalTo(knight.getu_id());
+        //retrieving from database
+        DatabaseReference ref = mFirebaseDatabaseReference.getDatabase().getReference();
+        Query queryRef = ref.child("knight_info").equalTo(knight.getu_id());
 
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 snapshot.getRef().setValue(null);
+                long count = snapshot.getChildrenCount();
+                System.out.println("The knight count on Add " + count);
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 String title = (String) dataSnapshot.child("knight_info").getValue();
+                long count = dataSnapshot.getChildrenCount();
                 System.out.println("The knight is changed " + title);
+                System.out.println("Number of knight children " + count);
 
             }
 
@@ -153,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        }); //finish retrieving from database
     }
 
 
