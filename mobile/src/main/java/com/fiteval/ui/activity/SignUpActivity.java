@@ -115,7 +115,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void run() {
                 progressDialog.cancel();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                //overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
+                overridePendingTransition(R.anim.activity_start_enter, R.anim.activity_start_exit);
                 finish();
             }
         }, 1000);

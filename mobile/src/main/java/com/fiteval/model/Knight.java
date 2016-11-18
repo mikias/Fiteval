@@ -178,32 +178,4 @@ public class Knight implements Inventory.InventoryListener {
         void update(int exp, int gold);
     }
 
-//    public void save(){
-//         int k_gold = getmGold();
-//         int k_level = getmLevel();
-//         Genders k_gender = getmGender();
-//         int k_age = getmAge();
-//         Inventory k_inv = getmInv();
-//        //add user to the database
-//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-//        Knight knight_info = new Knight(k_gold,k_level,k_gender,k_age,k_inv);
-//        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
-//
-<<<<<<< Updated upstream
-//        final int k_gold = MainActivity.knight.getmGold();
-//        final int k_level = MainActivity.knight.getmLevel();
-//        final Genders k_gender = MainActivity.knight.getmGender();
-//        final int k_age = MainActivity.knight.getmAge();
-//        final Inventory k_inv = MainActivity.knight.getmInv();
-        //add user to the database
-
-//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-//        Knight knight_info = this;
-//        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
-
-    }
-=======
-//    }
->>>>>>> Stashed changes
-
 }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.fiteval.R;
 import com.fiteval.config.FitevalApplication;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -28,9 +30,9 @@ public class IntroActivity extends AppCompatActivity {
      * Starts MainActivity
      */
     private void startMainActivity() {
-        boolean isUserAuthenticated = false;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Intent intent;
-        if (isUserAuthenticated) {
+        if (user != null) {
             intent = new Intent(IntroActivity.this, MainActivity.class);
         }
         else {

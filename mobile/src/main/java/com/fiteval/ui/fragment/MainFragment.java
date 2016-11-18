@@ -64,7 +64,7 @@ public class MainFragment extends Fragment {
         mLevel.setText(Integer.toString(MainActivity.knight.getmLevel()));
         mExp.setText(MainActivity.knight.getmExperience() + "/" +
                 MainActivity.knight.getmExperienceRemaining());
-        mGold.setText(MainActivity.knight.getmGold());
+        mGold.setText(Integer.toString(MainActivity.knight.getmGold()));
     }
 
     @Override

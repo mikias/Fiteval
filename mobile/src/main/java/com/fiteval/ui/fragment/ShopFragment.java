@@ -3,7 +3,6 @@ package com.fiteval.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-<<<<<<< Updated upstream
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-=======
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
->>>>>>> Stashed changes
-
 import com.fiteval.R;
 import com.fiteval.ui.activity.MainActivity;
 
-<<<<<<< Updated upstream
 public class ShopFragment extends Fragment implements View.OnClickListener {
-=======
-public class ShopFragment extends Fragment {
->>>>>>> Stashed changes
-
     public static final String TAG = MainFragment.class.getName();
 
     private ImageView mIVWizardHat;
