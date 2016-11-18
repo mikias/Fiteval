@@ -93,19 +93,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //TODO: check if a knight save exists or if the user exists and pull the info
         raids = RaidList.createList();
+
+        //saving to the database
         firebaseAuth = FirebaseAuth.getInstance();
-
         String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
-
         knight = new Knight(user_uid,2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
-
-//        equipment = new Equipment();
-
-        //String u_id, String name, int cost, boolean equipped, boolean purchased
         //add knight, equipment to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseDatabaseReference.child("knight_info").push().setValue(knight);
-//        mFirebaseDatabaseReference.child("equipment_info").push().setValue(equipment);
         loadItems();
 
         if (user == null) {
