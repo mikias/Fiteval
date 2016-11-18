@@ -23,7 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/layout_avatar"
+        android:layout_below="@+id/tv_steel_helm_buy"
         android:background="@drawable/solid_white_rounded_corner"
         android:gravity="center">
 
@@ -37,6 +37,7 @@
             android:background="@drawable/solid_white_rounded_corner"
             android:src="@drawable/wizard_hat"
             tools:ignore="ContentDescription,RtlHardcoded" />
+
 
         <ImageView
             android:id="@+id/iv_steel_helm"
@@ -183,7 +184,7 @@
             android:id="@+id/iv_avatar"
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
             android:src="@drawable/nude_male"
             tools:ignore="RtlHardcoded" />
@@ -224,7 +225,16 @@
             android:layout_alignTop="@+id/iv_avatar"
             android:src="@drawable/hand" />
 
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_steel_helm_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="300 gold"
+        android:layout_below="@+id/layout_avatar"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/butConfirm"
@@ -234,5 +244,79 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="Confirm" />
+
+
+    <TextView
+        android:id="@+id/tv_wizard_hat_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100 gold"
+        tools:ignore="HardcodedText"
+        android:layout_above="@+id/layout_helmet"
+        android:layout_toStartOf="@+id/layout_avatar"/>
+
+    <TextView
+        android:id="@+id/tv_viking_helmet_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1000 gold"
+        tools:ignore="HardcodedText"
+        android:layout_above="@+id/layout_helmet"
+        android:layout_toEndOf="@+id/layout_avatar"/>
+
+    <TextView
+        android:id="@+id/tv_wizard_cloak_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="200 gold"
+        tools:ignore="HardcodedText"
+        android:layout_below="@+id/layout_helmet"
+        android:layout_alignStart="@+id/tv_wizard_hat_buy"/>
+
+    <TextView
+        android:id="@+id/tv_viking_body_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1500 gold"
+        tools:ignore="HardcodedText"
+        android:layout_below="@+id/layout_helmet"
+        android:layout_toEndOf="@+id/layout_avatar"/>
+
+    <TextView
+    android:id="@+id/tv_oak_staff_buy"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="50 gold"
+    tools:ignore="HardcodedText"
+    android:layout_below="@+id/layout_armor"
+    android:layout_alignEnd="@+id/tv_wizard_cloak_buy"/>
+
+    <TextView
+        android:id="@+id/tv_battle_axe_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1000 gold"
+        tools:ignore="HardcodedText"
+        android:layout_below="@+id/layout_armor"
+        android:layout_alignStart="@+id/tv_viking_body_buy"/>
+
+    <TextView
+        android:id="@+id/tv_sword_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="400 gold"
+        tools:ignore="HardcodedText"
+        android:layout_below="@+id/layout_armor"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tv_steel_plate_buy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="650 gold"
+        tools:ignore="HardcodedText"
+        android:layout_below="@+id/layout_helmet"
+        android:layout_alignStart="@+id/tv_steel_helm_buy"/>
+
 
 </RelativeLayout>
