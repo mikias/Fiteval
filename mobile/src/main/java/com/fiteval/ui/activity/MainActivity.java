@@ -93,10 +93,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //TODO: check if a knight save exists or if the user exists and pull the info
         raids = RaidList.createList();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-      //  String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
+        String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
 
-        knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
+        knight = new Knight(user_uid,2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
 
         equipment = new Equipment();
 
