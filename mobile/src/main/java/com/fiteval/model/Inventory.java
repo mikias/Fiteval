@@ -34,3 +34,8 @@ public class Inventory extends ArrayList<Equipment> {
         void equipItem(Equipment item);
     }
 }
+/*
+save what?
+create a business object, for all table we need to save.
+inventory, Equipment, Knight
+ */

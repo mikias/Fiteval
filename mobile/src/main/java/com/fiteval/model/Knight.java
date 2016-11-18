@@ -1,13 +1,9 @@
 package com.fiteval.model;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-
-import static com.fiteval.model.InvSlots.ARMOR;
-import static com.fiteval.model.InvSlots.HELMET;
-import static com.fiteval.model.InvSlots.WEAPON;
 
 /**
  * Created by nader on 11/3/16.
@@ -35,6 +31,8 @@ public class Knight implements Inventory.InventoryListener {
     private int mAge;
     public int steps;
     private DatabaseReference mFirebaseDatabaseReference;
+    private FirebaseAuth firebaseAuth;
+
 
     public Knight() {
         new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
@@ -105,7 +103,6 @@ public class Knight implements Inventory.InventoryListener {
 
     public void setmArmor(Equipment mArmor) {
         this.mArmor = mArmor;
-        save();
     }
 
     public Equipment getmWeapon() {
@@ -154,7 +151,6 @@ public class Knight implements Inventory.InventoryListener {
 
     public void setmAge(int age) {
         this.mAge = age;
-        save();
     }
 
     public void levelUp() {
@@ -182,8 +178,18 @@ public class Knight implements Inventory.InventoryListener {
         void update(int exp, int gold);
     }
 
-    public void save(){
+//    public void save(){
+//         int k_gold = getmGold();
+//         int k_level = getmLevel();
+//         Genders k_gender = getmGender();
+//         int k_age = getmAge();
+//         Inventory k_inv = getmInv();
+//        //add user to the database
+//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+//        Knight knight_info = new Knight(k_gold,k_level,k_gender,k_age,k_inv);
+//        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
 //
+<<<<<<< Updated upstream
 //        final int k_gold = MainActivity.knight.getmGold();
 //        final int k_level = MainActivity.knight.getmLevel();
 //        final Genders k_gender = MainActivity.knight.getmGender();
@@ -196,5 +202,8 @@ public class Knight implements Inventory.InventoryListener {
 //        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
 
     }
+=======
+//    }
+>>>>>>> Stashed changes
 
 }
