@@ -133,6 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
 
                             User_Info u_info = new User_Info(user_uid, first_name, last_name, email);
+
                             mFirebaseDatabaseReference.child("user_info").push().setValue(u_info);
 
                         } else {
