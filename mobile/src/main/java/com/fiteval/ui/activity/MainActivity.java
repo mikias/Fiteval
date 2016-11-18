@@ -21,12 +21,10 @@ import com.fiteval.R;
 import com.fiteval.controller.ExperienceService;
 import com.fiteval.controller.HeartReaderService;
 import com.fiteval.model.Equipment;
-import com.fiteval.model.Equipment_Info;
 import com.fiteval.model.Genders;
 import com.fiteval.model.InvSlots;
 import com.fiteval.model.Inventory;
 import com.fiteval.model.Knight;
-import com.fiteval.model.Knight_Info;
 import com.fiteval.model.Raid;
 import com.fiteval.model.RaidList;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
@@ -71,10 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // -------------------------------------------------------
     public static Knight knight;
-    public static Knight_Info knight_info;
-
-    public static Equipment_Info equipment_info;
-
+    public static Equipment equipment;
     public static ArrayList<Raid> raids;
     public int mHeartRate;
 
@@ -99,22 +94,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //TODO: check if a knight save exists or if the user exists and pull the info
         raids = RaidList.createList();
 
+      //  String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
+
         knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
-        String user_uid = user.getUid().toString();
-        knight_info = new Knight_Info(user_uid,20,2000,10);
-        equipment_info = new Equipment_Info(user_uid,"mike",500,false,false);
-        //add knight_info, equipment_info to the database
+
+        equipment = new Equipment();
+
+        //String u_id, String name, int cost, boolean equipped, boolean purchased
+        //add knight, equipment_info to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight_info);
-        mFirebaseDatabaseReference.child("equipment_info").push().setValue(equipment_info);
+        mFirebaseDatabaseReference.child("knight_info").push().setValue(knight);
+        mFirebaseDatabaseReference.child("equipment_info").push().setValue(equipment);
         loadItems();
 
 //        if (user == null) {
 //            Intent intent = new Intent(this, LoginActivity.class);
 //            startActivity(intent);
 //        }
-
-       // knight.save();
 
         mServiceIntent = new Intent(this, ExperienceService.class);
         startService(mServiceIntent);

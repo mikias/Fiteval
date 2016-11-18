@@ -25,7 +25,6 @@ public class Knight implements Inventory.InventoryListener {
     private int mLevel;
 
     private Genders mGender;
-
     private boolean mInit;
 
     private int mAge;
