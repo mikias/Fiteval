@@ -1,17 +1,24 @@
 package com.fiteval.ui.fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fiteval.R;
-import com.fiteval.ui.activity.MainActivity;
+
+import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
 
@@ -24,7 +31,6 @@ public class MainFragment extends Fragment {
     private TextView mLevel;
     private TextView mExp;
     private TextView mGold;
-    private Callback mCallback;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -57,14 +63,12 @@ public class MainFragment extends Fragment {
     private void applyAvatarImage() {
         mAvatar.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.knight));
     }
-
     private void applyData() {
         mBpm.setText("105");
-        mStep.setText(Integer.toString(MainActivity.knight.steps));
-        mLevel.setText(Integer.toString(MainActivity.knight.getmLevel()));
-        mExp.setText(MainActivity.knight.getmExperience() + "/" +
-                MainActivity.knight.getmExperienceRemaining());
-        mGold.setText(MainActivity.knight.getmGold());
+        mStep.setText("1788");
+        mLevel.setText("17");
+        mExp.setText("1020/1500");
+        mGold.setText("46007");
     }
 
     @Override
@@ -72,6 +76,8 @@ public class MainFragment extends Fragment {
         super.onAttach(context);
         mCallback = (Callback) context;
     }
+
+    private Callback mCallback;
 
     public interface Callback {
 

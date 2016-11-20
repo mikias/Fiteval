@@ -1,32 +1,23 @@
 package com.fiteval.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.fiteval.R;
-import com.fiteval.controller.ExperienceService;
-import com.fiteval.controller.HeartReaderService;
-import com.fiteval.model.Equipment;
-import com.fiteval.model.Genders;
-import com.fiteval.model.InvSlots;
-import com.fiteval.model.Inventory;
-import com.fiteval.model.Knight;
-import com.fiteval.model.Raid;
-import com.fiteval.model.RaidList;
 import com.fiteval.ui.dialog.SimpleAlertDialog;
 import com.fiteval.ui.fragment.LeaderboardFragment;
 import com.fiteval.ui.fragment.MainFragment;
@@ -34,11 +25,6 @@ import com.fiteval.ui.fragment.NavigationFragment;
 import com.fiteval.ui.fragment.RaidFragment;
 import com.fiteval.ui.fragment.ShopFragment;
 import com.fiteval.util.MiscUtil;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener,
@@ -57,26 +43,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar mToolbar;
     private MiscUtil mUtil;
     private SimpleAlertDialog mDialog;
-    private DatabaseReference mFirebaseDatabaseReference;
 
     // -------------------------------------------------------
     private Context mContext;
     private FragmentManager mFragManager;
     private Fragment mFragment;
-    private Intent mServiceIntent;
-
-    // -------------------------------------------------------
-    public static Knight knight;
-    public static ArrayList<Raid> raids;
-
-    public int mHeartRate;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button mSignUp = (Button) findViewById(R.id.signup);
-
         super.onCreate(savedInstanceState);
         mContext = getApplicationContext();
         mFragManager = getSupportFragmentManager();
@@ -85,68 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDialog = new SimpleAlertDialog(this);
         initToolbar();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
         mFragment = new MainFragment();
         mToolbar.setTitle("Avatar");
         switchFragment(MainFragment.TAG);
-
-        //TODO: check if a knight save exists or if the user exists and pull the info
-        raids = RaidList.createList();
-
-        knight = new Knight(2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));;
-        loadItems();
-
-        if (user == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-
-        knight.save();
-
-        mServiceIntent = new Intent(this, ExperienceService.class);
-        startService(mServiceIntent);
-
-        mServiceIntent = new Intent(this, HeartReaderService.class);
-        startService(mServiceIntent);
-
-    }
-
-
-
-
-    //handles heart reading
-    @Override
-    protected void onResume() {
-        Log.d("Resume", "resumed");
-        Handler handler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                // message from API client! message from wear! The contents is the heartbeat.
-//                //textView.setText(Integer.toString(msg.what));
-//                mHeartRate = msg.what;
-//                Log.d("Handler", "Heartrate read");
-//                Fragment currentFrag = mFragManager.findFragmentById(mContainerFragment);
-//                if (currentFrag instanceof MainFragment) {
-//                    TextView tv = (TextView) findViewById(R.id.fragment_main_bpm);
-//                    Log.d("Handler", tv.getText().toString());
-//                    tv.setText(mHeartRate);
-//                }
-//            }
-        };
-        // register our handler with the HeartReader. This ensures we get messages whenever the service receives something.
-        HeartReaderService.setHandler(handler);
-        Log.d("Handler", "handler set");
-        super.onResume();
-    }
-
-    //handles heart reading
-    @Override
-    protected void onPause() {
-        // unregister our handler so the service does not need to send its messages anywhere.
-        HeartReaderService.setHandler(null);
-        super.onPause();
     }
 
     @Override
@@ -274,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.fragment_navigation_drawer_btn_main:
-                mToolbar.setTitle("Avatar");
                 currentFrag = mFragManager.findFragmentById(mContainerFragment);
                 if (currentFrag instanceof MainFragment) {
                     forceUpdateView(currentFrag);
@@ -302,7 +217,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.fragment_navigation_drawer_btn_shop:
-                mToolbar.setTitle("Shop");
                 currentFrag = mFragManager.findFragmentById(mContainerFragment);
                 if (currentFrag instanceof ShopFragment) {
                     forceUpdateView(currentFrag);
@@ -320,33 +234,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .replace(mContainerFragment, mFragment, tag)
                 .addToBackStack(tag)
                 .commit();
-    }
-
-    public Equipment wizHat, steelHelm, vikingHelm;
-    public Equipment wizCloak, steelPlate, vikingArmor;
-    public Equipment staff, sword, axe;
-
-    private void loadItems() {
-
-        //Equipment statements require these params:
-        //boolean equipped, boolean purchased, String name, int cost, InvSlots slot
-        wizHat = new Equipment(false, false, "Wizard Hat", 100, InvSlots.HELMET);
-        steelHelm = new Equipment(false, false, "Steel Helmet", 300, InvSlots.HELMET);
-        vikingHelm = new Equipment(false, false, "Viking Helmet", 1000, InvSlots.HELMET);
-
-        wizCloak = new Equipment(false, false, "Wizard Cloak", 200, InvSlots.ARMOR);
-        steelPlate = new Equipment(false, false, "Steel Platebody", 650, InvSlots.ARMOR);
-        vikingArmor = new Equipment(false, false, "Viking Armor", 1500, InvSlots.ARMOR);
-
-        staff = new Equipment(false, false, "Oak Staff", 50, InvSlots.WEAPON);
-        sword = new Equipment(false, false, "Iron Sword", 400, InvSlots.WEAPON);
-        axe = new Equipment(false, false, "Battle Axe", 1000, InvSlots.WEAPON);
-
-        //TODO load if items are purchased or equipped
-
-        knight.getmInv().addItem(wizHat).addItem(steelHelm).addItem(vikingHelm);
-        knight.getmInv().addItem(wizCloak).addItem(steelPlate).addItem(vikingArmor);
-        knight.getmInv().addItem(staff).addItem(sword).addItem(axe);
     }
 
     private void clearBackStack() {
@@ -376,5 +263,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolbar.setTitle(title);
         }
     }
-
 }

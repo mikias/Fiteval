@@ -11,55 +11,41 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fiteval.R;
-import com.fiteval.model.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Mikias Alemu on 11/01/2016.
  */
 public class SignUpActivity extends AppCompatActivity {
 
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mConditionRef = mRootRef.child("condition");
     //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser mFirebaseUser;
-    private DatabaseReference mFirebaseDatabaseReference;
+
+
     //defining view objects
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private EditText editTextFirstName;
-    private EditText editTextLastName;
-    private EditText editTextAge;
     private Button buttonSignup;
+
     private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        buttonSignup = (Button) findViewById(R.id.buttonSignup);
+
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
-        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
-        editTextAge = (EditText) findViewById(R.id.editTextAge);
-        //spannerGender = (Spanner) find
-
+        buttonSignup = (Button) findViewById(R.id.buttonSignup);
 
         progressDialog = new ProgressDialog(this);
-        //name and email
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         //initializing firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
-
-
         buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,23 +57,10 @@ public class SignUpActivity extends AppCompatActivity {
     private void registerUser() {
 
         //getting email and password from edit texts
-        final String email = editTextEmail.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        final String first_name = editTextFirstName.getText().toString().trim();
-        final String last_name = editTextLastName.getText().toString().trim();
-        int age = Integer.parseInt(editTextAge.getText().toString().trim());
 
         //checking if email and passwords are empty
-
-        if (TextUtils.isEmpty(first_name)) {
-            Toast.makeText(this, "Please enter first name", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (TextUtils.isEmpty(last_name)) {
-            Toast.makeText(this, "Please enter last name", Toast.LENGTH_LONG).show();
-            return;
-        }
-
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
@@ -98,15 +71,12 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        if (age <= 12) {
-            Toast.makeText(this, "Please enter a valid age", Toast.LENGTH_LONG).show();
-            return;
-        }
+        //if the email and password are not empty
+        //displaying a progress dialog
 
-        //add user to the database
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         progressDialog.setMessage("Registering Please Wait...");
         progressDialog.show();
+
 
         //creating a new user
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -116,13 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                         //checking if success
                         if (task.isSuccessful()) {
                             //display some message here
-                            Toast.makeText(SignUpActivity.this, "Successfully registered " + firebaseAuth.getCurrentUser().getUid().toString(), Toast.LENGTH_LONG).show();
-
-                            String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
-
-                            User_Info u_info = new User_Info(user_uid, first_name, last_name, email);
-                            mFirebaseDatabaseReference.child("user_info").push().setValue(u_info);
-
+                            Toast.makeText(SignUpActivity.this, "Successfully registered", Toast.LENGTH_LONG).show();
                         } else {
                             //display some message here
                             Toast.makeText(SignUpActivity.this, "Registration Error", Toast.LENGTH_LONG).show();
@@ -130,8 +94,5 @@ public class SignUpActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 });
-
-        MainActivity.knight.setmAge(age);
     }
-
 }

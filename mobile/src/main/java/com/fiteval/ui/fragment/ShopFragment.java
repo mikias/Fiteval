@@ -1,48 +1,57 @@
 package com.fiteval.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.fiteval.R;
-import com.fiteval.ui.activity.MainActivity;
+import com.fiteval.data.ShopItemDto;
+import com.fiteval.ui.adapter.ShopItemAdapter;
+import com.fiteval.ui.custom.NonScrollableGridView;
+import com.fiteval.ui.custom.ObservableScrollView;
+import com.fiteval.util.MiscUtil;
 
-public class ShopFragment extends Fragment implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShopFragment extends Fragment implements ObservableScrollView.Callbacks {
 
     public static final String TAG = MainFragment.class.getName();
 
-    private ImageView mIVWizardHat;
-    private ImageView mIVSteelHelm;
-    private ImageView mIVVikingHelm;
+    private Context mContext;
+    private ObservableScrollView mObservableScrollView;
+    private ImageView mAvatar;
+    private LinearLayout mStickyView;
+    private View mPlaceholderView;
+    private NonScrollableGridView mGridView;
+    private ShopItemAdapter mAdapter;
+    private ProgressDialog mProgress;
 
-    private ImageView mIVWizardCloak;
-    private ImageView mIVSteelPlate;
-    private ImageView mIVVikingArmor;
+    private Button mBuyBtn;
+    private Button mWearBtn;
+    private Button mTakeOffBtn;
 
-    private ImageView mIVOakStaff;
-    private ImageView mIVSword;
-    private ImageView mIVBattleAxe;
-    private ImageView mIVHat;
-    private ImageView mIVArmor;
-    private ImageView mIVWeapon;
-    private Callback mCallback;
+    private MiscUtil mUtils;
 
-    public ShopFragment() {
-        // Required empty public constructor
-    }
-
-    public static ShopFragment newInstance() {
-        ShopFragment fragment = new ShopFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -51,201 +60,138 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shop, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_shop, container, false);
 
-        mIVWizardHat = (ImageView) view.findViewById(R.id.iv_wizard_hat);
-        mIVSteelHelm = (ImageView) view.findViewById(R.id.iv_steel_helm);
-        mIVVikingHelm = (ImageView) view.findViewById(R.id.iv_viking_helmet);
+        mContext = getActivity();
+        mUtils = new MiscUtil(mContext);
 
-        mIVWizardCloak = (ImageView) view.findViewById(R.id.iv_wizard_cloak);
-        mIVSteelPlate = (ImageView) view.findViewById(R.id.iv_steelplate);
-        mIVVikingArmor = (ImageView) view.findViewById(R.id.iv_viking_armor);
+        mObservableScrollView = (ObservableScrollView) root.findViewById(R.id.fragment_shop_scroll_view);
+        mStickyView = (LinearLayout) root.findViewById(R.id.fragment_shop_sticky_header_layout);
+        mPlaceholderView = root.findViewById(R.id.fragment_shop_header_placeholder);
 
-        mIVOakStaff = (ImageView) view.findViewById(R.id.iv_oakstaff);
-        mIVSword = (ImageView) view.findViewById(R.id.iv_sword);
-        mIVBattleAxe = (ImageView) view.findViewById(R.id.iv_battle_axe);
+        mAvatar = (ImageView) root.findViewById(R.id.fragment_shop_avatar);
+        mGridView = (NonScrollableGridView) root.findViewById(R.id.fragment_shop_gridview);
 
-        mIVHat = (ImageView) view.findViewById(R.id.iv_helmet);
-        mIVHat.setTag(-1);
-        mIVArmor = (ImageView) view.findViewById(R.id.iv_armor);
-        mIVArmor.setTag(-1);
-        mIVWeapon = (ImageView) view.findViewById(R.id.iv_weapon);
-        mIVWeapon.setTag(-1);
+        mBuyBtn = (Button) root.findViewById(R.id.fragment_shop_buy_btn);
+        mWearBtn = (Button) root.findViewById(R.id.fragment_shop_wear_btn);
+        mTakeOffBtn = (Button) root.findViewById(R.id.fragment_shop_takeoff_btn);
 
-        final int[] stuff = {-1, -1, -1};
-
-        mIVWizardHat.setOnClickListener(new View.OnClickListener() {
+        mBuyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mIVHat.getTag().equals(0)) {
-                    mIVHat.setImageResource(R.drawable.wizard_hat);
-                    mIVHat.setVisibility(View.VISIBLE);
-                    mIVHat.setTag(0);
-                    stuff[0] = 0;
-                } else {
-                    stuff[0] = -1;
-                    mIVHat.setTag(-1);
-                    mIVHat.setVisibility(View.INVISIBLE);
-                }
+                mUtils.toastCenter("Buying");
             }
         });
 
-        mIVSteelHelm.setOnClickListener(new View.OnClickListener() {
+        mWearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mIVHat.getTag().equals(1)) {
-                    mIVHat.setImageResource(R.drawable.steel_helm);
-                    mIVHat.setVisibility(View.VISIBLE);
-                    mIVHat.setTag(1);
-                    stuff[0] = 1;
-                } else {
-                    stuff[0] = -1;
-                    mIVHat.setTag(-1);
-                    mIVHat.setVisibility(View.INVISIBLE);
-                }
+                mUtils.toastCenter("Wearing");
             }
         });
 
-        mIVVikingHelm.setOnClickListener(new View.OnClickListener() {
+        mTakeOffBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mIVHat.getTag().equals(2)) {
-                    mIVHat.setImageResource(R.drawable.viking_helmet);
-                    mIVHat.setVisibility(View.VISIBLE);
-                    mIVHat.setTag(2);
-                    stuff[0] = 2;
-                } else {
-                    stuff[0] = -1;
-                    mIVHat.setTag(-1);
-                    mIVHat.setVisibility(View.INVISIBLE);
-                }
+                mUtils.toastCenter("Taking off");
             }
         });
 
-        mIVWizardCloak.setOnClickListener(new View.OnClickListener() {
+        mObservableScrollView.setCallbacks(this);
+
+        mStickyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mIVArmor.getTag().equals(3)) {
-                    mIVArmor.setImageResource(R.drawable.wizard_cloak);
-                    mIVArmor.setVisibility(View.VISIBLE);
-                    mIVArmor.setTag(3);
-                    stuff[1] = 3;
-                } else {
-                    stuff[1] = -1;
-                    mIVArmor.setTag(-1);
-                    mIVArmor.setVisibility(View.INVISIBLE);
-                }
+                mObservableScrollView.smoothScrollTo(0, 0);
             }
         });
 
-        mIVSteelPlate.setOnClickListener(new View.OnClickListener() {
+        mStickyView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
-            public void onClick(View v) {
-                if (!mIVArmor.getTag().equals(4)) {
-                    mIVArmor.setImageResource(R.drawable.steelplate_body);
-                    mIVArmor.setVisibility(View.VISIBLE);
-                    mIVArmor.setTag(4);
-                    stuff[1] = 4;
-                } else {
-                    stuff[1] = -1;
-                    mIVArmor.setTag(-1);
-                    mIVArmor.setVisibility(View.INVISIBLE);
-                }
+            public boolean onPreDraw() {
+                mStickyView.getViewTreeObserver().removeOnPreDrawListener(this);
+                mPlaceholderView.getLayoutParams().height = mStickyView.getHeight();
+                mPlaceholderView.setVisibility(View.VISIBLE);
+                return false;
             }
         });
 
-        mIVVikingArmor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mIVArmor.getTag().equals(5)) {
-                    mIVArmor.setTag(-1);
-                    mIVArmor.setVisibility(View.INVISIBLE);
-                    stuff[1] = 5;
-                } else {
-                    stuff[1] = -1;
-                    mIVArmor.setImageResource(R.drawable.viking_armor);
-                    mIVArmor.setVisibility(View.VISIBLE);
-                    mIVArmor.setTag(5);
-                }
-            }
-        });
-
-        mIVOakStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mIVWeapon.getTag().equals(6)) {
-                    mIVWeapon.setTag(-1);
-                    mIVWeapon.setVisibility(View.INVISIBLE);
-                    stuff[2] = 6;
-                } else {
-                    stuff[2] = -1;
-                    mIVWeapon.setImageResource(R.drawable.oakstaff);
-                    mIVWeapon.setVisibility(View.VISIBLE);
-                    mIVWeapon.setTag(6);
-                }
-            }
-        });
-
-        mIVSword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mIVWeapon.getTag().equals(7)) {
-                    mIVWeapon.setTag(-1);
-                    mIVWeapon.setVisibility(View.INVISIBLE);
-                    stuff[2] = 7;
-                } else {
-                    stuff[2] = -1;
-                    mIVWeapon.setImageResource(R.drawable.sword);
-                    mIVWeapon.setVisibility(View.VISIBLE);
-                    mIVWeapon.setTag(7);
-                }
-            }
-        });
-
-        mIVBattleAxe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mIVWeapon.getTag().equals(8)) {
-                    mIVWeapon.setTag(-1);
-                    mIVWeapon.setVisibility(View.INVISIBLE);
-                    stuff[2] = 8;
-                } else {
-                    stuff[2] = -1;
-                    mIVWeapon.setImageResource(R.drawable.battle_axe);
-                    mIVWeapon.setVisibility(View.VISIBLE);
-                    mIVWeapon.setTag(8);
-                }
-            }
-        });
-
-        Button confirm = (Button) view.findViewById(R.id.butConfirm);
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (int i : stuff) {
-                    if (i >= 0) {
-                        if (MainActivity.knight.getmInv().get(i).isPurchased()) {
-                            MainActivity.knight.equipItem(MainActivity.knight.getmInv().get(i));
-                        } else if (MainActivity.knight.getmGold() > MainActivity.knight.getmInv().get(i).getCost()) {
-                            MainActivity.knight.setmGold(MainActivity.knight.getmGold() - MainActivity.knight.getmInv().get(i).getCost());
-                            MainActivity.knight.equipItem(MainActivity.knight.getmInv().get(i));
-                        } else {
-                            Toast toast = new Toast(getContext());
-                            toast.setText("You need more money to purchase this!");
-                            toast.setDuration(Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        Log.d("Shop", MainActivity.knight.getmInv().get(i).getName());
+        mObservableScrollView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        onScrollChanged(mObservableScrollView.getScrollY());
                     }
+                });
+
+        mProgress = new ProgressDialog(mContext);
+
+        mProgress.setMessage("Loading...");
+        mProgress.show();
+        populateList();
+        new GetShopInfoTask().download();
+
+        return root;
+    }
+
+    private class GetShopInfoTask {
+
+        private void download() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mProgress.dismiss();
+                    mAvatar.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.knight));
                 }
+            }, 1000);
+        }
+
+        class AsyncDownloadTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                return null;
+            }
+        }
+    }
+
+    private void populateList() {
+        List<ShopItemDto> list = new ArrayList<>();
+        list.add(new ShopItemDto("Item_1", 100));
+        list.add(new ShopItemDto("Item_2", 200));
+        list.add(new ShopItemDto("Item_3", 300));
+        list.add(new ShopItemDto("Item_4", 400));
+        list.add(new ShopItemDto("Item_5", 500));
+        list.add(new ShopItemDto("Item_6", 600));
+        list.add(new ShopItemDto("Item_7", 700));
+        list.add(new ShopItemDto("Item_8", 800));
+        list.add(new ShopItemDto("Item_9", 900));
+        list.add(new ShopItemDto("Item_10", 900));
+        list.add(new ShopItemDto("Item_11", 900));
+        list.add(new ShopItemDto("Item_12", 900));
+
+        mAdapter = new ShopItemAdapter(mContext, list);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mUtils.toastCenter("Position: " + position);
             }
         });
+    }
 
+    @Override
+    public void onScrollChanged(int scrollY) {
+        mStickyView.setTranslationY(Math.max(mPlaceholderView.getTop(), scrollY));
+    }
 
-        return view;
+    @Override
+    public void onDownMotionEvent() {
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent() {
     }
 
     @Override
@@ -254,11 +200,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
         mCallback = (Callback) context;
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
+    private Callback mCallback;
     public interface Callback {
         void updateToolbarTitle(String title);
     }
