@@ -85,21 +85,20 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="5dp"
-                        android:gravity="center_vertical"
                         android:src="@drawable/coin" />
 
                     <TextView
+                        android:id="@+id/fragment_shop_gold"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="4dp"
-                        android:text="500"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="4dp"
                         android:textColor="@color/black"
                         android:textSize="35dp" />
                 </LinearLayout>
@@ -111,37 +110,4 @@
             </LinearLayout>
         </FrameLayout>
     </com.fiteval.ui.custom.ObservableScrollView>
-
-    <!-- Buttons -->
-    <LinearLayout
-        android:id="@+id/fragment_shop_btn_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/fragment_shop_buy_btn"
-            style="@style/bottom_button_style"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="BUY"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/fragment_shop_wear_btn"
-            style="@style/bottom_button_style"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="WEAR"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/fragment_shop_takeoff_btn"
-            style="@style/bottom_button_style"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="TAKE OFF"
-            android:visibility="gone" />
-    </LinearLayout>
 </RelativeLayout>

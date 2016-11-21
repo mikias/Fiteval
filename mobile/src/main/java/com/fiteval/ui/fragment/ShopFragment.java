@@ -7,17 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fiteval.R;
@@ -25,8 +21,11 @@ import com.fiteval.data.ShopItemDto;
 import com.fiteval.ui.adapter.ShopItemAdapter;
 import com.fiteval.ui.custom.NonScrollableGridView;
 import com.fiteval.ui.custom.ObservableScrollView;
+import com.fiteval.ui.dialog.CommonAlertDialog;
+import com.fiteval.ui.viewholder.ShopItemViewHolder;
 import com.fiteval.util.MiscUtil;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,11 +41,11 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
     private NonScrollableGridView mGridView;
     private ShopItemAdapter mAdapter;
     private ProgressDialog mProgress;
+    private TextView mGold;
 
-    private Button mBuyBtn;
-    private Button mWearBtn;
-    private Button mTakeOffBtn;
+    private List<ShopItemDto> mList;
 
+    private CommonAlertDialog mAlertDialog;
     private MiscUtil mUtils;
 
     @Override
@@ -65,6 +64,8 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
 
         mContext = getActivity();
         mUtils = new MiscUtil(mContext);
+        mAlertDialog = new CommonAlertDialog(mContext);
+        mAlertDialog.setCancelable(true);
 
         mObservableScrollView = (ObservableScrollView) root.findViewById(R.id.fragment_shop_scroll_view);
         mStickyView = (LinearLayout) root.findViewById(R.id.fragment_shop_sticky_header_layout);
@@ -73,30 +74,7 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
         mAvatar = (ImageView) root.findViewById(R.id.fragment_shop_avatar);
         mGridView = (NonScrollableGridView) root.findViewById(R.id.fragment_shop_gridview);
 
-        mBuyBtn = (Button) root.findViewById(R.id.fragment_shop_buy_btn);
-        mWearBtn = (Button) root.findViewById(R.id.fragment_shop_wear_btn);
-        mTakeOffBtn = (Button) root.findViewById(R.id.fragment_shop_takeoff_btn);
-
-        mBuyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mUtils.toastCenter("Buying");
-            }
-        });
-
-        mWearBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mUtils.toastCenter("Wearing");
-            }
-        });
-
-        mTakeOffBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mUtils.toastCenter("Taking off");
-            }
-        });
+        mGold = (TextView) root.findViewById(R.id.fragment_shop_gold);
 
         mObservableScrollView.setCallbacks(this);
 
@@ -141,8 +119,9 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mProgress.dismiss();
+                    syncDataWithServer();
                     mAvatar.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.knight));
+                    mProgress.dismiss();
                 }
             }, 1000);
         }
@@ -157,28 +136,122 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
     }
 
     private void populateList() {
-        List<ShopItemDto> list = new ArrayList<>();
-        list.add(new ShopItemDto("Item_1", 100));
-        list.add(new ShopItemDto("Item_2", 200));
-        list.add(new ShopItemDto("Item_3", 300));
-        list.add(new ShopItemDto("Item_4", 400));
-        list.add(new ShopItemDto("Item_5", 500));
-        list.add(new ShopItemDto("Item_6", 600));
-        list.add(new ShopItemDto("Item_7", 700));
-        list.add(new ShopItemDto("Item_8", 800));
-        list.add(new ShopItemDto("Item_9", 900));
-        list.add(new ShopItemDto("Item_10", 900));
-        list.add(new ShopItemDto("Item_11", 900));
-        list.add(new ShopItemDto("Item_12", 900));
+        mList = new ArrayList<>();
+        mList.add(new ShopItemDto("helm_1", "Steel Helm", 100,
+                ContextCompat.getDrawable(mContext, R.drawable.box), true, true));
+        mList.add(new ShopItemDto("helm_2", "Viking Helmet", 200,
+                ContextCompat.getDrawable(mContext, R.drawable.box), false, false));
+        mList.add(new ShopItemDto("helm_3", "Wizard Hat", 300,
+                ContextCompat.getDrawable(mContext, R.drawable.box), true, false));
 
-        mAdapter = new ShopItemAdapter(mContext, list);
+        mList.add(new ShopItemDto("body_1", "Steel Armor", 100,
+                ContextCompat.getDrawable(mContext, R.drawable.box), true, true));
+        mList.add(new ShopItemDto("body_2", "Viking Armor", 200,
+                ContextCompat.getDrawable(mContext, R.drawable.box), true, false));
+        mList.add(new ShopItemDto("body_3", "Wizard Clock", 300,
+                ContextCompat.getDrawable(mContext, R.drawable.box), false, false));
+
+        mList.add(new ShopItemDto("weapon_1", "Battle Axe", 100,
+                ContextCompat.getDrawable(mContext, R.drawable.box), true, true));
+        mList.add(new ShopItemDto("weapon_2", "Great Sword", 200,
+                ContextCompat.getDrawable(mContext, R.drawable.box)));
+        mList.add(new ShopItemDto("weapon_3", "Oak Staff", 300,
+                ContextCompat.getDrawable(mContext, R.drawable.box)));
+
+        mAdapter = new ShopItemAdapter(mContext, mList);
+
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mUtils.toastCenter("Position: " + position);
+                final ShopItemDto dto = (ShopItemDto) mAdapter.getItem(position);
+                final ShopItemViewHolder viewHolder = (ShopItemViewHolder) view.getTag();
+
+                if (dto.isPurchased) {
+                    // Take item off ---------------------------------------------------------------
+                    if (dto.isWearing) {
+                        mAlertDialog.setCustomMessage(String.format("Take off '%s' ?", dto.itemName));
+                        mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
+                            @Override
+                            public void onPositive() {
+                                dto.isWearing = false;
+                                viewHolder.priceLayout.setVisibility(View.GONE);
+                                viewHolder.takeOffLayout.setVisibility(View.GONE);
+                                viewHolder.wearLayout.setVisibility(View.VISIBLE);
+
+                                if (mAlertDialog.isShowing()) {
+                                    mAlertDialog.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onNegative() {
+                                if (mAlertDialog.isShowing()) {
+                                    mAlertDialog.dismiss();
+                                }
+                            }
+                        });
+                        mAlertDialog.show();
+                    }
+                    // Wear item ---------------------------------------------------------------
+                    else {
+                        mAlertDialog.setCustomMessage(String.format("Wear '%s' ?", dto.itemName));
+                        mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
+                            @Override
+                            public void onPositive() {
+                                dto.isWearing = true;
+                                viewHolder.priceLayout.setVisibility(View.GONE);
+                                viewHolder.wearLayout.setVisibility(View.GONE);
+                                viewHolder.takeOffLayout.setVisibility(View.VISIBLE);
+
+                                if (mAlertDialog.isShowing()) {
+                                    mAlertDialog.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onNegative() {
+                                if (mAlertDialog.isShowing()) {
+                                    mAlertDialog.dismiss();
+                                }
+                            }
+                        });
+                        mAlertDialog.show();
+                    }
+                }
+                // Buy item ------------------------------------------------------------------------
+                else {
+                    mAlertDialog.setCustomMessage(String.format("Buy '%s' for %d gold ?", dto.itemName, dto.cost));
+                    mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
+                        @Override
+                        public void onPositive() {
+                            dto.isPurchased = true;
+                            dto.isWearing = false;
+                            viewHolder.priceLayout.setVisibility(View.GONE);
+                            viewHolder.takeOffLayout.setVisibility(View.GONE);
+                            viewHolder.wearLayout.setVisibility(View.VISIBLE);
+
+                            if (mAlertDialog.isShowing()) {
+                                mAlertDialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onNegative() {
+                            if (mAlertDialog.isShowing()) {
+                                mAlertDialog.dismiss();
+                            }
+                        }
+                    });
+                    mAlertDialog.show();
+                }
             }
         });
+    }
+
+    private void syncDataWithServer() {
+        int gold = 1000;
+        mGold.setText(NumberFormat.getIntegerInstance().format(gold));
     }
 
     @Override
@@ -200,7 +273,16 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
         mCallback = (Callback) context;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            mAlertDialog.dismiss();
+        }
+    }
+
     private Callback mCallback;
+
     public interface Callback {
         void updateToolbarTitle(String title);
     }

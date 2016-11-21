@@ -1,5 +1,6 @@
 package com.fiteval.data;
 
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,22 +10,36 @@ import android.os.Parcelable;
 
 public class ShopItemDto implements Parcelable{
     public String id;
-    public int cost;
-    public boolean isEquipped;
     public String itemName;
-    public boolean isPurchased;
+    public int cost;
+    public Drawable image;
 
-    public ShopItemDto(String itemName, int cost) {
+    public boolean isPurchased;
+    public boolean isWearing;
+
+    public ShopItemDto(String id, String itemName, int cost, Drawable image) {
+        this.id = id;
         this.itemName = itemName;
         this.cost = cost;
+        this.image = image;
+    }
+
+    public ShopItemDto(String id, String itemName, int cost, Drawable image,
+                       boolean isPurchased, boolean isEquipped) {
+        this.id = id;
+        this.itemName = itemName;
+        this.cost = cost;
+        this.image = image;
+        this.isPurchased = isPurchased;
+        this.isWearing = isEquipped;
     }
 
     protected ShopItemDto(Parcel in) {
         id = in.readString();
-        cost = in.readInt();
-        isEquipped = in.readByte() != 0;
         itemName = in.readString();
+        cost = in.readInt();
         isPurchased = in.readByte() != 0;
+        isWearing = in.readByte() != 0;
     }
 
     public static final Creator<ShopItemDto> CREATOR = new Creator<ShopItemDto>() {
@@ -47,9 +62,9 @@ public class ShopItemDto implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
-        dest.writeInt(cost);
-        dest.writeByte((byte) (isEquipped ? 1 : 0));
         dest.writeString(itemName);
+        dest.writeInt(cost);
         dest.writeByte((byte) (isPurchased ? 1 : 0));
+        dest.writeByte((byte) (isWearing ? 1 : 0));
     }
 }
