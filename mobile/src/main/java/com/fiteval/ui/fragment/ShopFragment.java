@@ -2,6 +2,8 @@ package com.fiteval.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,11 +31,10 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopFragment extends Fragment implements ObservableScrollView.Callbacks {
+public class ShopFragment extends BaseFragment implements ObservableScrollView.Callbacks {
 
     public static final String TAG = MainFragment.class.getName();
 
-    private Context mContext;
     private ObservableScrollView mObservableScrollView;
     private ImageView mAvatar;
     private LinearLayout mStickyView;
@@ -44,9 +45,6 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
     private TextView mGold;
 
     private List<ShopItemDto> mList;
-
-    private CommonAlertDialog mAlertDialog;
-    private MiscUtil mUtils;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -61,11 +59,6 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_shop, container, false);
-
-        mContext = getActivity();
-        mUtils = new MiscUtil(mContext);
-        mAlertDialog = new CommonAlertDialog(mContext);
-        mAlertDialog.setCancelable(true);
 
         mObservableScrollView = (ObservableScrollView) root.findViewById(R.id.fragment_shop_scroll_view);
         mStickyView = (LinearLayout) root.findViewById(R.id.fragment_shop_sticky_header_layout);
@@ -120,7 +113,6 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
                 @Override
                 public void run() {
                     syncDataWithServer();
-                    mAvatar.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.knight));
                     mProgress.dismiss();
                 }
             }, 1000);
@@ -137,26 +129,46 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
 
     private void populateList() {
         mList = new ArrayList<>();
-        mList.add(new ShopItemDto("helm_1", "Steel Helm", 100,
-                ContextCompat.getDrawable(mContext, R.drawable.box), true, true));
-        mList.add(new ShopItemDto("helm_2", "Viking Helmet", 200,
-                ContextCompat.getDrawable(mContext, R.drawable.box), false, false));
-        mList.add(new ShopItemDto("helm_3", "Wizard Hat", 300,
-                ContextCompat.getDrawable(mContext, R.drawable.box), true, false));
 
-        mList.add(new ShopItemDto("body_1", "Steel Armor", 100,
-                ContextCompat.getDrawable(mContext, R.drawable.box), true, true));
-        mList.add(new ShopItemDto("body_2", "Viking Armor", 200,
-                ContextCompat.getDrawable(mContext, R.drawable.box), true, false));
-        mList.add(new ShopItemDto("body_3", "Wizard Clock", 300,
-                ContextCompat.getDrawable(mContext, R.drawable.box), false, false));
+        // head gears
+        mList.add(new ShopItemDto("head_1", ShopItemDto.ItemType.head, "Steel Helm", 100,
+                R.drawable.item_head_steel_helm, R.drawable.avatar_head_steel_helm));
 
-        mList.add(new ShopItemDto("weapon_1", "Battle Axe", 100,
-                ContextCompat.getDrawable(mContext, R.drawable.box), true, true));
-        mList.add(new ShopItemDto("weapon_2", "Great Sword", 200,
-                ContextCompat.getDrawable(mContext, R.drawable.box)));
-        mList.add(new ShopItemDto("weapon_3", "Oak Staff", 300,
-                ContextCompat.getDrawable(mContext, R.drawable.box)));
+        mList.add(new ShopItemDto("head_2", ShopItemDto.ItemType.head, "Viking Helm", 200,
+                R.drawable.item_head_viking_helm, R.drawable.avatar_head_viking_helm));
+
+        mList.add(new ShopItemDto("head_3", ShopItemDto.ItemType.head, "Wizard Hat", 300,
+                R.drawable.item_head_wizard_hat, R.drawable.avatar_head_wizard_hat));
+
+        // body armors
+        mList.add(new ShopItemDto("body_1", ShopItemDto.ItemType.body, "Steel Armor", 100,
+                R.drawable.item_body_steel_armor, R.drawable.avatar_body_steel_armor));
+
+        mList.add(new ShopItemDto("body_2", ShopItemDto.ItemType.body, "Viking Armor", 200,
+                R.drawable.item_body_viking_armor, R.drawable.avatar_body_viking_armor));
+
+        mList.add(new ShopItemDto("body_3", ShopItemDto.ItemType.body, "Wizard Clock", 300,
+                R.drawable.item_body_wizard_cloak, R.drawable.avatar_body_wizard_cloak));
+
+        // weapons
+        mList.add(new ShopItemDto("weapon_1", ShopItemDto.ItemType.weapon, "Great Sword", 100,
+                R.drawable.item_weapon_great_sword, R.drawable.avatar_weapon_great_sword));
+
+        mList.add(new ShopItemDto("weapon_2", ShopItemDto.ItemType.weapon, "Battle Axe", 200,
+                R.drawable.item_weapon_battle_axe, R.drawable.avatar_weapon_battle_axe));
+
+        mList.add(new ShopItemDto("weapon_3", ShopItemDto.ItemType.weapon, "Oak Staff", 300,
+                R.drawable.item_weapon_oak_staff, R.drawable.avatar_weapon_oak_staff));
+
+        // foot gears
+        mList.add(new ShopItemDto("foot_1", ShopItemDto.ItemType.foot, "Steel Boots", 100,
+                R.drawable.item_foot_steel_boots, R.drawable.avatar_foot_steel_boots));
+
+        mList.add(new ShopItemDto("foot_2", ShopItemDto.ItemType.foot, "Viking Boots", 200,
+                R.drawable.item_foot_viking_boots, R.drawable.avatar_foot_viking_boots));
+
+        mList.add(new ShopItemDto("foot_3", ShopItemDto.ItemType.foot, "Wizard Boots", 300,
+                R.drawable.item_foot_wizard_boots, R.drawable.avatar_foot_wizard_boots));
 
         mAdapter = new ShopItemAdapter(mContext, mList);
 
@@ -165,7 +177,6 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final ShopItemDto dto = (ShopItemDto) mAdapter.getItem(position);
-                final ShopItemViewHolder viewHolder = (ShopItemViewHolder) view.getTag();
 
                 if (dto.isPurchased) {
                     // Take item off ---------------------------------------------------------------
@@ -174,10 +185,26 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
                         mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
                             @Override
                             public void onPositive() {
+                                // sync with firebase here
+
                                 dto.isWearing = false;
-                                viewHolder.priceLayout.setVisibility(View.GONE);
-                                viewHolder.takeOffLayout.setVisibility(View.GONE);
-                                viewHolder.wearLayout.setVisibility(View.VISIBLE);
+                                switch (dto.type) {
+                                    case head:
+                                        mUserDto.headItemId = null;
+                                        break;
+                                    case body:
+                                        mUserDto.bodyItemId = null;
+                                        break;
+                                    case weapon:
+                                        mUserDto.weaponItemId = null;
+                                        break;
+                                    case foot:
+                                        mUserDto.footItemId = null;
+                                        break;
+                                }
+
+                                mAdapter.notifyDataSetChanged();
+                                drawAvatar();
 
                                 if (mAlertDialog.isShowing()) {
                                     mAlertDialog.dismiss();
@@ -199,10 +226,43 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
                         mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
                             @Override
                             public void onPositive() {
+                                // sync with firebase here
+
+                                // handle previously wearing item if exists
+                                switch (dto.type) {
+                                    case head:
+                                        if (mUserDto.headItemId != null) {
+                                            findItemById(mUserDto.headItemId).isWearing = false;
+                                        }
+                                        mUserDto.headItemId = dto.id;
+                                        break;
+
+                                    case body:
+                                        if (mUserDto.bodyItemId != null) {
+                                            findItemById(mUserDto.bodyItemId).isWearing = false;
+                                        }
+                                        mUserDto.bodyItemId = dto.id;
+
+                                        break;
+                                    case weapon:
+                                        if (mUserDto.weaponItemId != null) {
+                                            findItemById(mUserDto.weaponItemId).isWearing = false;
+                                        }
+                                        mUserDto.weaponItemId = dto.id;
+                                        break;
+
+                                    case foot:
+                                        if (mUserDto.footItemId != null) {
+                                            findItemById(mUserDto.footItemId).isWearing = false;
+                                        }
+                                        mUserDto.footItemId = dto.id;
+
+                                        break;
+                                }
+
                                 dto.isWearing = true;
-                                viewHolder.priceLayout.setVisibility(View.GONE);
-                                viewHolder.wearLayout.setVisibility(View.GONE);
-                                viewHolder.takeOffLayout.setVisibility(View.VISIBLE);
+                                mAdapter.notifyDataSetChanged();
+                                drawAvatar();
 
                                 if (mAlertDialog.isShowing()) {
                                     mAlertDialog.dismiss();
@@ -225,14 +285,23 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
                     mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
                         @Override
                         public void onPositive() {
-                            dto.isPurchased = true;
-                            dto.isWearing = false;
-                            viewHolder.priceLayout.setVisibility(View.GONE);
-                            viewHolder.takeOffLayout.setVisibility(View.GONE);
-                            viewHolder.wearLayout.setVisibility(View.VISIBLE);
 
                             if (mAlertDialog.isShowing()) {
                                 mAlertDialog.dismiss();
+                            }
+
+                            if (mUserDto.gold >= 0 && dto.cost >= 0 && mUserDto.gold >= dto.cost) {
+                                mUserDto.gold -= dto.cost;
+                                mGold.setText(NumberFormat.getIntegerInstance().format(mUserDto.gold ));
+                                // sync with firebase here
+
+                                dto.isPurchased = true;
+                                dto.isWearing = false;
+
+                                mAdapter.notifyDataSetChanged();
+                            }
+                            else {
+                                mDialog.show("Insufficient fund!\nJoin raids for more gold!");
                             }
                         }
 
@@ -249,9 +318,98 @@ public class ShopFragment extends Fragment implements ObservableScrollView.Callb
         });
     }
 
+    /**
+     *
+     */
     private void syncDataWithServer() {
-        int gold = 1000;
-        mGold.setText(NumberFormat.getIntegerInstance().format(gold));
+        mGold.setText(NumberFormat.getIntegerInstance().format(mUserDto.gold ));
+
+        mList.get(0).isPurchased = true;
+        mList.get(1).isPurchased = false;
+        mList.get(2).isPurchased = false;
+        mList.get(3).isPurchased = true;
+        mList.get(4).isPurchased = true;
+        mList.get(5).isPurchased = false;
+        mList.get(6).isPurchased = true;
+        mList.get(7).isPurchased = false;
+        mList.get(8).isPurchased = false;
+        mList.get(9).isPurchased = true;
+        mList.get(10).isPurchased = false;
+        mList.get(11).isPurchased = false;
+
+        mList.get(0).isWearing = true;
+        mList.get(1).isWearing = false;
+        mList.get(2).isWearing = false;
+        mList.get(3).isWearing = true;
+        mList.get(4).isWearing = false;
+        mList.get(5).isWearing = false;
+        mList.get(6).isWearing = true;
+        mList.get(7).isWearing = false;
+        mList.get(8).isWearing = false;
+        mList.get(9).isWearing = true;
+        mList.get(10).isWearing = false;
+        mList.get(11).isWearing = false;
+
+        mList.get(0).isDataLoaded = true;
+        mList.get(1).isDataLoaded = true;
+        mList.get(2).isDataLoaded = true;
+        mList.get(3).isDataLoaded = true;
+        mList.get(4).isDataLoaded = true;
+        mList.get(5).isDataLoaded = true;
+        mList.get(6).isDataLoaded = true;
+        mList.get(7).isDataLoaded = true;
+        mList.get(8).isDataLoaded = true;
+        mList.get(9).isDataLoaded = true;
+        mList.get(10).isDataLoaded = true;
+        mList.get(11).isDataLoaded = true;
+
+        mAdapter.notifyDataSetChanged();
+
+        mUserDto.headItemId = "head_1";
+        mUserDto.bodyItemId = "body_1";
+        mUserDto.weaponItemId = "weapon_1";
+        mUserDto.footItemId = "foot_1";
+
+        drawAvatar();
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    private ShopItemDto findItemById(String id) {
+        if (id != null) {
+            for (ShopItemDto dto : mList) {
+                if (dto.id.equals(id)) {
+                    return dto;
+                }
+            }
+        }
+        return null;
+    }
+
+    private void drawAvatar() {
+        ShopItemDto headItem = findItemById(mUserDto.headItemId);
+        ShopItemDto bodyItem = findItemById(mUserDto.bodyItemId);
+        ShopItemDto weaponItem = findItemById(mUserDto.weaponItemId);
+        ShopItemDto footItem = findItemById(mUserDto.footItemId);
+
+        int base = R.drawable.avatar_base;
+        int head = (headItem != null) ? headItem.wearImage : R.drawable.avatar_transparent;
+        int body = (bodyItem != null) ? bodyItem.wearImage : R.drawable.avatar_transparent;
+        int weapon = (weaponItem != null) ? weaponItem.wearImage : R.drawable.avatar_transparent;
+        int foot = (footItem != null) ? footItem.wearImage : R.drawable.avatar_transparent;
+        int hand = R.drawable.avatar_hand;
+
+        Drawable[] layers = new Drawable[6];
+        layers[0] = ContextCompat.getDrawable(mContext, base);
+        layers[1] = ContextCompat.getDrawable(mContext, body);
+        layers[2] = ContextCompat.getDrawable(mContext, head);
+        layers[3] = ContextCompat.getDrawable(mContext, weapon);
+        layers[4] = ContextCompat.getDrawable(mContext, hand);
+        layers[5] = ContextCompat.getDrawable(mContext, foot);
+
+        mAvatar.setImageDrawable(new LayerDrawable(layers));
     }
 
     @Override

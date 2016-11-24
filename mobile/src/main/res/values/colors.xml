@@ -19,8 +19,10 @@
     <color name="grey_dd">#dddddd</color>
     <color name="grey_c7">#c7c7c7</color>
     <color name="grey_bf">#bfbfbf</color>
+    <color name="grey_bb">#bbbbbb</color>
     <color name="grey_85">#858585</color>
     <color name="grey_66">#666666</color>
+    <color name="grey_33">#333333</color>
     <color name="grey_tint">#55191919</color>
 
     <color name="alert_red">#BA1818</color>

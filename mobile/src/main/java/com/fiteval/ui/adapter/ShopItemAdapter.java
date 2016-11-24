@@ -69,31 +69,30 @@ public class ShopItemAdapter extends BaseAdapter {
         } else {
             viewHolder = (ShopItemViewHolder) convertView.getTag();
         }
-        //viewHolder.image.setImageResource(mItemList.get(position));
+        viewHolder.image.setImageDrawable(ContextCompat.getDrawable(mContext, mItemList.get(position).itemImage));
         viewHolder.name.setText(mItemList.get(position).itemName);
 
         ShopItemDto dto = mItemList.get(position);
-        if (dto.isPurchased) {
-            if (dto.isWearing) {
-                // wearing - can take off
-                viewHolder.priceLayout.setVisibility(View.GONE);
-                viewHolder.wearLayout.setVisibility(View.GONE);
-                viewHolder.takeOffLayout.setVisibility(View.VISIBLE);
-                //viewHolder.itemLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.grey_f3));
+        if (dto.isDataLoaded) {
+            if (dto.isPurchased) {
+                if (dto.isWearing) {
+                    // wearing - can take off
+                    viewHolder.priceLayout.setVisibility(View.GONE);
+                    viewHolder.wearLayout.setVisibility(View.GONE);
+                    viewHolder.takeOffLayout.setVisibility(View.VISIBLE);
+                } else {
+                    // not wearing - can wear
+                    viewHolder.priceLayout.setVisibility(View.GONE);
+                    viewHolder.takeOffLayout.setVisibility(View.GONE);
+                    viewHolder.wearLayout.setVisibility(View.VISIBLE);
+                }
             } else {
-                // not wearing - can wear
-                viewHolder.priceLayout.setVisibility(View.GONE);
+                // not purchaed - can purchase
+                viewHolder.price.setText(mNumFormat.format(dto.cost));
+                viewHolder.wearLayout.setVisibility(View.GONE);
                 viewHolder.takeOffLayout.setVisibility(View.GONE);
-                viewHolder.wearLayout.setVisibility(View.VISIBLE);
-                //viewHolder.itemLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+                viewHolder.priceLayout.setVisibility(View.VISIBLE);
             }
-        } else {
-            // not purchaed - can purchase
-            viewHolder.price.setText(mNumFormat.format(dto.cost));
-            viewHolder.wearLayout.setVisibility(View.GONE);
-            viewHolder.takeOffLayout.setVisibility(View.GONE);
-            viewHolder.priceLayout.setVisibility(View.VISIBLE);
-            //viewHolder.itemLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
         }
 
         return convertView;

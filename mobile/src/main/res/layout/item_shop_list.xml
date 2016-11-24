@@ -16,7 +16,7 @@
         android:background="@color/white"
         android:padding="8dp">
 
-        <!-- Shop item image -->
+        <!-- Shop item itemImage -->
         <ImageView
             android:id="@+id/item_shop_image"
             android:layout_width="80dp"
@@ -32,8 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="16dp"
             android:layout_below="@+id/item_shop_image"
+            android:layout_marginBottom="2dp"
             android:layout_marginTop="8dp"
             android:ellipsize="marquee"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:paddingBottom="1dp"
             android:text="Item Name"

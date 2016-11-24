@@ -8,28 +8,34 @@ import android.os.Parcelable;
  * Created by Henry Moon on 11/17/2016.
  */
 
-public class ShopItemDto implements Parcelable{
+public class ShopItemDto implements Parcelable {
+    public enum ItemType {head, body, weapon, foot}
+
+    public ItemType type;
     public String id;
     public String itemName;
     public int cost;
-    public Drawable image;
+    public int itemImage;
+    public int wearImage;
 
     public boolean isPurchased;
     public boolean isWearing;
+    public boolean isDataLoaded;
 
-    public ShopItemDto(String id, String itemName, int cost, Drawable image) {
+    public ShopItemDto(String id, ItemType type, String itemName, int cost, int itemImage, int wearImage) {
         this.id = id;
+        this.type = type;
         this.itemName = itemName;
         this.cost = cost;
-        this.image = image;
+        this.itemImage = itemImage;
+        this.wearImage = wearImage;
     }
 
-    public ShopItemDto(String id, String itemName, int cost, Drawable image,
-                       boolean isPurchased, boolean isEquipped) {
+    public ShopItemDto(String id, String itemName, int cost, int itemImage, int wearImage, boolean isPurchased, boolean isEquipped) {
         this.id = id;
         this.itemName = itemName;
         this.cost = cost;
-        this.image = image;
+        this.itemImage = itemImage;
         this.isPurchased = isPurchased;
         this.isWearing = isEquipped;
     }
@@ -38,8 +44,11 @@ public class ShopItemDto implements Parcelable{
         id = in.readString();
         itemName = in.readString();
         cost = in.readInt();
+        itemImage = in.readInt();
+        wearImage = in.readInt();
         isPurchased = in.readByte() != 0;
         isWearing = in.readByte() != 0;
+        isDataLoaded = in.readByte() != 0;
     }
 
     public static final Creator<ShopItemDto> CREATOR = new Creator<ShopItemDto>() {
@@ -64,7 +73,10 @@ public class ShopItemDto implements Parcelable{
         dest.writeString(id);
         dest.writeString(itemName);
         dest.writeInt(cost);
+        dest.writeInt(itemImage);
+        dest.writeInt(wearImage);
         dest.writeByte((byte) (isPurchased ? 1 : 0));
         dest.writeByte((byte) (isWearing ? 1 : 0));
+        dest.writeByte((byte) (isDataLoaded ? 1 : 0));
     }
 }
