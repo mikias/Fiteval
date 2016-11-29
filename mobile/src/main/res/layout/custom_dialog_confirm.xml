@@ -25,7 +25,7 @@
         android:id="@+id/custom_dialog_confirm_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/dialog_btn_selector_grey"
+        android:background="@drawable/dialog_btn_selector"
         android:gravity="center">
 
         <ImageView

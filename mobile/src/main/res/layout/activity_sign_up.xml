@@ -37,7 +37,6 @@
             android:hint="Enter password"
             android:inputType="textPassword" />
 
-<<<<<<< HEAD
         <EditText
             android:id="@+id/editTextFirstName"
             android:layout_width="match_parent"
@@ -55,8 +54,6 @@
             android:inputType="textPersonName" />
 
 
-=======
->>>>>>> origin/henry-patch
         <Button
             android:id="@+id/buttonSignup"
             android:layout_width="match_parent"

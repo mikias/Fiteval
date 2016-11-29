@@ -6,8 +6,6 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="indego">#3F51B5</color>
-    <color name="checkup_blue">#186FBB</color>
-    <color name="checkup_blue_dark">#155B9B</color>
 
     <!--slide menu-->
     <color name="fragment_navigation_drawer_txt_pressed">#2d353e</color>
@@ -16,21 +14,10 @@
     <color name="slide_menu_line">#80eeeeee</color>
 
     <color name="grey_f3">#f3f3f3</color>
-    <color name="grey_dd">#dddddd</color>
     <color name="grey_c7">#c7c7c7</color>
-    <color name="grey_bf">#bfbfbf</color>
-    <color name="grey_bb">#bbbbbb</color>
     <color name="grey_85">#858585</color>
     <color name="grey_66">#666666</color>
-    <color name="grey_33">#333333</color>
-    <color name="grey_tint">#55191919</color>
 
     <color name="alert_red">#BA1818</color>
     <color name="alert_red_dark">#991715</color>
-
-    <color name="gold_yellow">#F8D820</color>
-    <color name="gold_yellow_dark">#D8A038</color>
-
-    <color name="coffee">#6F4E37</color>
-    <color name="transparent">#00000000</color>
 </resources>

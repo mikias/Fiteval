@@ -38,12 +38,13 @@ public class LeaderboardListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LeaderViewHolder viewHolder;
+
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_leaderboard_list, parent, false);
             viewHolder = new LeaderViewHolder();
