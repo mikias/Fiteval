@@ -13,12 +13,14 @@ import java.util.ArrayList;
 public class RaidList {
 
     public static ArrayList<Raid> createList() {
-        Location burrussLoc = new Location("");
         ArrayList<Raid> list = new ArrayList<>();
+
+        Location burrussLoc = new Location("");
         burrussLoc.setLatitude(37.228500);
         burrussLoc.setLongitude(-80.422860);
-
         Raid burruss = new Raid("Burruss Hall", burrussLoc, R.drawable.burruss);
+
+        //TODO add more raid locations
 
         list.add(burruss);
 

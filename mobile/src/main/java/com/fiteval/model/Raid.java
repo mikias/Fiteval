@@ -15,6 +15,8 @@ public class Raid {
     private String name;
     private Location location;
     private int photo;
+
+    //TODO make this a time instead so it can check to see if it's been used recently
     private boolean used;
 
     public Raid(String name, Location location, int photo) {

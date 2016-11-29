@@ -1,51 +1,33 @@
 package com.fiteval.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fiteval.R;
+import com.fiteval.model.Raid;
+import com.fiteval.model.RaidList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RaidFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RaidFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class RaidFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-
-
-    private OnFragmentInteractionListener mListener;
+    RecyclerView mRecycler;
 
     public RaidFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RaidFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RaidFragment newInstance(String param1, String param2) {
+    public static RaidFragment newInstance() {
         RaidFragment fragment = new RaidFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,48 +41,77 @@ public class RaidFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_raid, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View root = inflater.inflate(R.layout.fragment_main, container, false);
+
+        mRecycler = (RecyclerView) root.findViewById(R.id.raid_recyclerView);
+
+        mRecycler.setAdapter(new Adapter());
+
+        return root;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        mRecycler.setAdapter(null);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallback = (Callback) context;
+        mRecycler.setAdapter(new Adapter());
     }
 
-    private Callback mCallback;
+    private class Adapter extends RecyclerView.Adapter<Adapter.RaidViewHolder>{
 
-    public interface Callback {
+        ArrayList<Raid> list;
 
-        void updateToolbarTitle(String title);
+        Adapter(){
+            list = RaidList.createList();
+        }
+
+        @Override
+        public RaidViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.raid_card, parent, false);
+            return new RaidViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(RaidViewHolder holder, int position) {
+            holder.locName.setText(list.get(position).getName());
+            holder.locPhoto.setImageResource(list.get(position).getPhoto());
+            holder.locRaid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO check to see if user is close enough to location, then raid
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
+        }
+
+        class RaidViewHolder extends RecyclerView.ViewHolder {
+            TextView locName;
+            Button locRaid;
+            ImageView locPhoto;
+
+            RaidViewHolder(View itemView) {
+                super(itemView);
+
+                locName = (TextView) itemView.findViewById(R.id.tv_location);
+                locRaid = (Button)itemView.findViewById(R.id.button_raid);
+                locPhoto = (ImageView)itemView.findViewById(R.id.iv_location);
+            }
+        }
+
     }
 }
