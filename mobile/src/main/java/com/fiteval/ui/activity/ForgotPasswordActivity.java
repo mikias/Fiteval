@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.fiteval.R;
@@ -23,7 +22,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private EditText inputEmail;
     private Button btnReset, btnBack;
-    private ImageButton mBtnEmailClear;
     private FirebaseAuth auth;
     private ProgressDialog progressDialog;
 
@@ -32,20 +30,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
+
         inputEmail = (EditText) findViewById(R.id.forgot_password_et_email);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnBack = (Button) findViewById(R.id.btn_back);
-        mBtnEmailClear = (ImageButton) findViewById(R.id.login_btn_idClear);
         progressDialog = new ProgressDialog(this);
 
         auth = FirebaseAuth.getInstance();
 
-        mBtnEmailClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputEmail.setText("");
-            }
-        });
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +46,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             }
         });
+
 
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -73,10 +73,10 @@ public class LeaderboardFragment extends Fragment {
         list.add(new LeaderboardListItem("5", "Mikias", "42"));
         list.add(new LeaderboardListItem("6", "Nader", "37"));
         list.add(new LeaderboardListItem("7", "Travis", "35"));
-        list.add(new LeaderboardListItem("8", "McCrickard", "24"));
-        list.add(new LeaderboardListItem("10", "Reinhardt", "20"));
-        list.add(new LeaderboardListItem("11", "Lucio", "17"));
-        list.add(new LeaderboardListItem("12", "Symmetra", "9"));
+        list.add(new LeaderboardListItem("8", "John", "24"));
+        list.add(new LeaderboardListItem("10", "Jane", "20"));
+        list.add(new LeaderboardListItem("11", "Andrew", "17"));
+        list.add(new LeaderboardListItem("12", "Elizabeth", "9"));
         populateList(list);
 
         return root;

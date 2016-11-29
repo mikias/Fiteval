@@ -61,7 +61,7 @@ public class SimpleAlertDialog {
         textView.setText(message);
         if (isButtonRed) {
             button.setBackgroundDrawable(ContextCompat.getDrawable(mContext,
-                    R.drawable.dialog_btn_selector));
+                    R.drawable.dialog_btn_selector_grey));
             isButtonRed = false;
         }
         dialog.show();
