@@ -195,7 +195,6 @@ public class LoginActivity extends Activity implements MediaPlayer.OnPreparedLis
                     finish();
                 }else{
                     Toast.makeText(LoginActivity.this,"There was an error....", Toast.LENGTH_LONG).show();
-
                 }
 
 

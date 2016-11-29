@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationFragment.Callback,
         LeaderboardFragment.Callback,
         MainFragment.Callback,
-        RaidFragment.Callback,
         ShopFragment.Callback {
 
     private final static int mContainerFragment = R.id.activity_main_container;
@@ -101,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //saving to the database
         firebaseAuth = FirebaseAuth.getInstance();
         String user_uid = firebaseAuth.getCurrentUser().getUid().toString();
+        knight = new Knight(user_uid, 2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
         knight.getSteps();
-        knight = new Knight(user_uid,2000, 20, Genders.MALE, 20, new Inventory(new ArrayList<Equipment>()));
         //add knight, equipment to the database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseDatabaseReference.child("knight_info").push().setValue(knight);
@@ -331,8 +330,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.fragment_navigation_drawer_btn_raid:
-                mUtil.toastCenter("Raid fragment is not implemented yet");
-                mToolbar.setTitle("RaidFragment");
+                currentFrag = mFragManager.findFragmentById(mContainerFragment);
+                if (currentFrag instanceof RaidFragment) {
+                    forceUpdateView(currentFrag);
+                } else {
+                    clearBackStack();
+                    mFragment = new RaidFragment();
+                    switchFragment(RaidFragment.TAG);
+                }
+                mToolbar.setTitle("Raids");
                 break;
 
             case R.id.fragment_navigation_drawer_btn_leaderboard:

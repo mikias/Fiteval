@@ -3,6 +3,7 @@ package com.fiteval.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class RaidFragment extends Fragment {
 
     RecyclerView mRecycler;
+    public static final String TAG = MainFragment.class.getName();
 
     public RaidFragment() {
         // Required empty public constructor
@@ -42,11 +44,19 @@ public class RaidFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_raid, container, false);
 
         mRecycler = (RecyclerView) root.findViewById(R.id.raid_recyclerView);
 
-        mRecycler.setAdapter(new Adapter());
+        mRecycler.setHasFixedSize(true);
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecycler.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        Adapter adapter = new Adapter();
+        mRecycler.setAdapter(adapter);
 
         return root;
     }
@@ -55,12 +65,6 @@ public class RaidFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mRecycler.setAdapter(null);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mRecycler.setAdapter(new Adapter());
     }
 
     private class Adapter extends RecyclerView.Adapter<Adapter.RaidViewHolder>{
