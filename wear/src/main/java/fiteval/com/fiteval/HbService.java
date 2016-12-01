@@ -36,6 +36,7 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
     private TextView mTVHeartbeat;
 
     private boolean attached = false;
+    private hbListener mListener;
 
     public HbService() {
         super();
@@ -71,6 +72,8 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
             Log.e("HB Service", sensor.getName() + ": " + sensor.getType());
         }
 
+
+
         // Register for sensor events
         mSensorManager.registerListener(this, mHeartRateSensor, SensorManager.SENSOR_DELAY_UI);
 
@@ -91,12 +94,24 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
         Log.d("HB Service", Sensor.TYPE_HEART_RATE+" : "+sensorEvent.sensor.getType());
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_HEART_RATE && sensorEvent.values.length > 0) {
-            Log.d("HB Service", "Heartbeat Read: " + Math.round(sensorEvent.values[0]));
+//            Log.d("HB Service", "Heartbeat Read: " + Math.round(sensorEvent.values[0]));
             mHeartbeat = Math.round(sensorEvent.values[0]);
+            double multiplier = 1;
 
             Log.d("HB service", "heartbeat: " + mHeartbeat);
-            sendBeetsBySchrute();
-            mTVHeartbeat.setText(mHeartbeat);
+//            sendBeetsBySchrute();
+//            mListener.callback(mHeartbeat);
+            MainActivity.mTextView.setText(Integer.toString(mHeartbeat));
+            if (mHeartbeat < 85) {
+                multiplier = 1;
+            } else if (mHeartbeat >= 85 && mHeartbeat < 125) {
+                multiplier = 1.5;
+            } else if (mHeartbeat >= 125 && mHeartbeat < 150) {
+                multiplier = 2;
+            } else if (mHeartbeat >= 150) {
+                multiplier = 2.5;
+            }
+            MainActivity.mMultiplier.setText(multiplier + "x EXP");
 
             //if (onChangeListener != null) {
                 //Log.d("HB service", "sending new value to listener: " + newValue);
@@ -109,6 +124,10 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public void registerListener(hbListener listener) {
+        mListener = listener;
     }
 
     public void sendBeetsBySchrute() {
@@ -128,6 +147,10 @@ public class HbService extends Service implements SensorEventListener, GoogleApi
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("hbservice", "connectionfailed");
+    }
+
+    public interface hbListener {
+        void callback(int heartbeat);
     }
 
     private class WatchSenderAsync extends AsyncTask<Integer, Void, Void> {

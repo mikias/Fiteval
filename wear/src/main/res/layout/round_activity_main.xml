@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="fiteval.com.fiteval.MainActivity"
-    tools:deviceIds="wear_round">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="fiteval.com.fiteval.MainActivity"
+              android:weightSum="1"
+              android:padding="16dp"
+              android:orientation="vertical"
+              tools:deviceIds="wear_round">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="1"
+        android:layout_weight=".66">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pixel_heart"
+            android:layout_weight=".5"/>
+
+        <TextView
+            android:id="@+id/heartbeat"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="74"
+            android:textColor="#ffddff"
+            android:textSize="65sp"/>
+    </LinearLayout>
     <TextView
-        android:text="11"
-        android:layout_width="wrap_content"
-        android:id="@+id/heartbeat"
-        android:layout_height="wrap_content"
-        android:textColor="#77ff99"
-        android:textSize="128sp"
-        android:layout_gravity="center"/>
-</RelativeLayout>
+        android:id="@+id/tv_multiplier"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:textColor="#ffddff"
+        android:text="1x EXP"
+        android:gravity="center"
+        android:textSize="26sp"/>
+
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements HeartbeatService.OnChangeListener {
@@ -21,7 +22,8 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
 
     private static final String LOG_TAG = "MyHeart";
 
-    private TextView mTextView;
+    public static TextView mTextView;
+    public static TextView mMultiplier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,11 @@ public class MainActivity extends Activity implements HeartbeatService.OnChangeL
             public void onLayoutInflated(WatchViewStub stub) {
                 // as soon as layout is there...
                 mTextView = (TextView) stub.findViewById(R.id.heartbeat);
+                mMultiplier = (TextView) stub.findViewById(R.id.tv_multiplier);
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 Log.d("main", "starting activity");
                 startService(new Intent(MainActivity.this, HbService.class));
+
                 // bind to our service.
                 /*bindService(new Intent(MainActivity.this, HeartbeatService.class), new ServiceConnection() {
                     @Override
