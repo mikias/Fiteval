@@ -28,7 +28,7 @@ import java.util.List;
 
 public class LeaderboardFragment extends Fragment {
 
-    public static final String TAG = MainFragment.class.getName();
+    public static final String TAG = LeaderboardFragment.class.getName();
 
     private Context mContext;
     private CheckBox mCheckBox;
@@ -97,6 +97,12 @@ public class LeaderboardFragment extends Fragment {
 
     private void dismissLoadingWait() {
         mLoadingProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCallback.updateToolbarTitle("Leaderboard");
     }
 
     @Override

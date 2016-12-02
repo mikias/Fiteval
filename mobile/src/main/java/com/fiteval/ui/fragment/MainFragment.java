@@ -1,35 +1,33 @@
 package com.fiteval.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fiteval.R;
+import com.fiteval.ui.custom.AutoResizeTextView;
 
-import java.util.ArrayList;
+import java.text.NumberFormat;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
 
     public static final String TAG = MainFragment.class.getName();
 
     private Context mContext;
     private ImageView mAvatar;
     private TextView mBpm;
-    private TextView mStep;
-    private TextView mLevel;
-    private TextView mExp;
+    private AutoResizeTextView mStep;
+    private AutoResizeTextView mLevel;
+    private ProgressBar mExpProgress;
+    private TextView mStepsLeft;
+    private TextView mStepsStatus;
     private TextView mGold;
 
     @Override
@@ -49,9 +47,13 @@ public class MainFragment extends Fragment {
         mContext = getActivity();
         mAvatar = (ImageView) root.findViewById(R.id.fragment_main_avatar);
         mBpm = (TextView) root.findViewById(R.id.fragment_main_bpm);
-        mStep = (TextView) root.findViewById(R.id.fragment_main_step);
-        mLevel = (TextView) root.findViewById(R.id.fragment_main_level);
-        mExp = (TextView) root.findViewById(R.id.fragment_main_exp);
+        mStep = (AutoResizeTextView) root.findViewById(R.id.fragment_main_step);
+
+
+        mLevel = (AutoResizeTextView) root.findViewById(R.id.fragment_main_level);
+        mExpProgress = (ProgressBar) root.findViewById(R.id.fragment_main_exp_progress);
+        mStepsLeft = (TextView) root.findViewById(R.id.fragment_main_steps_left);
+        mStepsStatus = (TextView) root.findViewById(R.id.fragment_main_steps_status);
         mGold = (TextView) root.findViewById(R.id.fragment_main_gold);
 
         applyAvatarImage();
@@ -63,12 +65,32 @@ public class MainFragment extends Fragment {
     private void applyAvatarImage() {
         mAvatar.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.knight));
     }
+
     private void applyData() {
-        mBpm.setText("105");
-        mStep.setText("1788");
-        mLevel.setText("17");
-        mExp.setText("1020/1500");
-        mGold.setText("46007");
+        int exp = 3500;
+        int level = calculateLevel(exp);
+        int target = (level + 1) * 1320;
+
+        mBpm.setText(NumberFormat.getIntegerInstance().format(105));
+        mStep.setText(NumberFormat.getIntegerInstance().format(exp));
+
+        mLevel.setText(NumberFormat.getInstance().format(calculateLevel(exp)));
+        mExpProgress.setProgress((int) (((float) exp / (float) target) * 100));
+        mStepsLeft.setText(String.format("%s steps to next level",
+                NumberFormat.getIntegerInstance().format(target - exp)));
+
+        mStepsStatus.setText(String.format("%d/%d", exp, target));
+        mGold.setText(NumberFormat.getIntegerInstance().format(1000));
+    }
+
+    private int calculateLevel(int exp) {
+        return exp / 1320;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCallback.updateToolbarTitle("Main");
     }
 
     @Override

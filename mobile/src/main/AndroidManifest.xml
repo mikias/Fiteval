@@ -6,11 +6,13 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.BODY_SENSORS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <uses-feature android:name="android.hardware.sensor.stepdetector" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.stepdetector"
+        android:required="true" />
 
     <application
         android:name=".config.FitevalApplication"
@@ -42,13 +44,18 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ui.activity.SignUpActivity"
-            android:label="@string/signup_btn"/>
+            android:label="@string/signup_btn" />
         <activity
             android:name=".ui.activity.ForgotPasswordActivity"
-            android:label="@string/btn_reset_password"/>
+            android:label="@string/btn_reset_password" />
 
+        <!--
         <service android:name=".controller.ExperienceService"/>
-        <service android:name=".controller.HeartReaderService"/>
+        <service android:name=".controller.HeartReaderService"/>-->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 </manifest>
 

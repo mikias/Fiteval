@@ -33,7 +33,7 @@ import java.util.List;
 
 public class ShopFragment extends BaseFragment implements ObservableScrollView.Callbacks {
 
-    public static final String TAG = MainFragment.class.getName();
+    public static final String TAG = ShopFragment.class.getName();
 
     private ObservableScrollView mObservableScrollView;
     private ImageView mAvatar;
@@ -157,8 +157,8 @@ public class ShopFragment extends BaseFragment implements ObservableScrollView.C
         mList.add(new ShopItemDto("weapon_2", ShopItemDto.ItemType.weapon, "Battle Axe", 200,
                 R.drawable.item_weapon_battle_axe, R.drawable.avatar_weapon_battle_axe));
 
-        mList.add(new ShopItemDto("weapon_3", ShopItemDto.ItemType.weapon, "Oak Staff", 300,
-                R.drawable.item_weapon_oak_staff, R.drawable.avatar_weapon_oak_staff));
+        mList.add(new ShopItemDto("weapon_3", ShopItemDto.ItemType.weapon, "Magic Wand", 300,
+                R.drawable.item_weapon_magic_wand, R.drawable.avatar_weapon_magic_wand));
 
         // foot gears
         mList.add(new ShopItemDto("foot_1", ShopItemDto.ItemType.foot, "Steel Boots", 100,
@@ -181,102 +181,68 @@ public class ShopFragment extends BaseFragment implements ObservableScrollView.C
                 if (dto.isPurchased) {
                     // Take item off ---------------------------------------------------------------
                     if (dto.isWearing) {
-                        mAlertDialog.setCustomMessage(String.format("Take off '%s' ?", dto.itemName));
-                        mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
-                            @Override
-                            public void onPositive() {
-                                // sync with firebase here
+                        // sync with firebase here
+                        dto.isWearing = false;
+                        switch (dto.type) {
+                            case head:
+                                mUserDto.headItemId = null;
+                                break;
+                            case body:
+                                mUserDto.bodyItemId = null;
+                                break;
+                            case weapon:
+                                mUserDto.weaponItemId = null;
+                                break;
+                            case foot:
+                                mUserDto.footItemId = null;
+                                break;
+                        }
 
-                                dto.isWearing = false;
-                                switch (dto.type) {
-                                    case head:
-                                        mUserDto.headItemId = null;
-                                        break;
-                                    case body:
-                                        mUserDto.bodyItemId = null;
-                                        break;
-                                    case weapon:
-                                        mUserDto.weaponItemId = null;
-                                        break;
-                                    case foot:
-                                        mUserDto.footItemId = null;
-                                        break;
-                                }
+                        mAdapter.notifyDataSetChanged();
+                        drawAvatar();
 
-                                mAdapter.notifyDataSetChanged();
-                                drawAvatar();
-
-                                if (mAlertDialog.isShowing()) {
-                                    mAlertDialog.dismiss();
-                                }
-                            }
-
-                            @Override
-                            public void onNegative() {
-                                if (mAlertDialog.isShowing()) {
-                                    mAlertDialog.dismiss();
-                                }
-                            }
-                        });
-                        mAlertDialog.show();
+                        if (mAlertDialog.isShowing()) {
+                            mAlertDialog.dismiss();
+                        }
                     }
                     // Wear item ---------------------------------------------------------------
                     else {
-                        mAlertDialog.setCustomMessage(String.format("Wear '%s' ?", dto.itemName));
-                        mAlertDialog.setOnButtonClickedListener(new CommonAlertDialog.onButtonClickedListener() {
-                            @Override
-                            public void onPositive() {
-                                // sync with firebase here
-
-                                // handle previously wearing item if exists
-                                switch (dto.type) {
-                                    case head:
-                                        if (mUserDto.headItemId != null) {
-                                            findItemById(mUserDto.headItemId).isWearing = false;
-                                        }
-                                        mUserDto.headItemId = dto.id;
-                                        break;
-
-                                    case body:
-                                        if (mUserDto.bodyItemId != null) {
-                                            findItemById(mUserDto.bodyItemId).isWearing = false;
-                                        }
-                                        mUserDto.bodyItemId = dto.id;
-
-                                        break;
-                                    case weapon:
-                                        if (mUserDto.weaponItemId != null) {
-                                            findItemById(mUserDto.weaponItemId).isWearing = false;
-                                        }
-                                        mUserDto.weaponItemId = dto.id;
-                                        break;
-
-                                    case foot:
-                                        if (mUserDto.footItemId != null) {
-                                            findItemById(mUserDto.footItemId).isWearing = false;
-                                        }
-                                        mUserDto.footItemId = dto.id;
-
-                                        break;
+                        // sync with firebase here
+                        // handle previously wearing item if exists
+                        switch (dto.type) {
+                            case head:
+                                if (mUserDto.headItemId != null) {
+                                    findItemById(mUserDto.headItemId).isWearing = false;
                                 }
+                                mUserDto.headItemId = dto.id;
+                                break;
 
-                                dto.isWearing = true;
-                                mAdapter.notifyDataSetChanged();
-                                drawAvatar();
-
-                                if (mAlertDialog.isShowing()) {
-                                    mAlertDialog.dismiss();
+                            case body:
+                                if (mUserDto.bodyItemId != null) {
+                                    findItemById(mUserDto.bodyItemId).isWearing = false;
                                 }
-                            }
+                                mUserDto.bodyItemId = dto.id;
 
-                            @Override
-                            public void onNegative() {
-                                if (mAlertDialog.isShowing()) {
-                                    mAlertDialog.dismiss();
+                                break;
+                            case weapon:
+                                if (mUserDto.weaponItemId != null) {
+                                    findItemById(mUserDto.weaponItemId).isWearing = false;
                                 }
-                            }
-                        });
-                        mAlertDialog.show();
+                                mUserDto.weaponItemId = dto.id;
+                                break;
+
+                            case foot:
+                                if (mUserDto.footItemId != null) {
+                                    findItemById(mUserDto.footItemId).isWearing = false;
+                                }
+                                mUserDto.footItemId = dto.id;
+
+                                break;
+                        }
+
+                        dto.isWearing = true;
+                        mAdapter.notifyDataSetChanged();
+                        drawAvatar();
                     }
                 }
                 // Buy item ------------------------------------------------------------------------
@@ -429,6 +395,12 @@ public class ShopFragment extends BaseFragment implements ObservableScrollView.C
     public void onAttach(Context context) {
         super.onAttach(context);
         mCallback = (Callback) context;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCallback.updateToolbarTitle("Shop");
     }
 
     @Override

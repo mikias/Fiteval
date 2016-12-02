@@ -201,8 +201,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.fragment_navigation_drawer_btn_raid:
-                mUtil.toastCenter("Raid fragment is not implemented yet");
-                mToolbar.setTitle("RaidFragment");
+                currentFrag = mFragManager.findFragmentById(mContainerFragment);
+                if (currentFrag instanceof RaidFragment) {
+                    forceUpdateView(currentFrag);
+                } else {
+                    clearBackStack();
+                    mFragment = new RaidFragment();
+                    switchFragment(RaidFragment.TAG);
+                }
                 break;
 
             case R.id.fragment_navigation_drawer_btn_leaderboard:
@@ -262,5 +268,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (oldTitle == null || !oldTitle.equals(title)) {
             toolbar.setTitle(title);
         }
+    }
+
+    private OnRequestPermissionResultListener mCallbackOnPermission;
+
+    public void setCallbackOnRequestPermission(OnRequestPermissionResultListener listener) {
+        mCallbackOnPermission = listener;
+    }
+
+    public interface OnRequestPermissionResultListener {
+        void onRequestPermissionResult(int requestCode, String permissions[], int[] grantResults);
     }
 }

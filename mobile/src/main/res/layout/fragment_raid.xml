@@ -1,13 +1,50 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fiteval.ui.fragment.RaidFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.fiteval.ui.custom.ObservableScrollView
+        android:id="@+id/fragment_raid_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/grey_f3"
+        android:fillViewport="false">
 
-</FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/fragment_raid_map_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true" />
+
+            <!-- Separator -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/grey_85" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/fragment_raid_map_view">
+
+                <com.fiteval.ui.custom.NonScrollableListView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/fragment_raid_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/grey_f3"
+                    android:descendantFocusability="blocksDescendants"
+                    android:dividerHeight="6dp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </com.fiteval.ui.custom.ObservableScrollView>
+</RelativeLayout>
